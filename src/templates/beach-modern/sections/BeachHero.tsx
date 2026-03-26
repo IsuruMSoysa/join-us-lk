@@ -36,7 +36,7 @@ export function BeachHero({
       </AnimatedSection>
 
       <AnimatedSection delay={0.3}>
-        <h1 className="font-sans text-6xl md:text-9xl text-sky-950 font-bold leading-tight mb-8 tracking-tight whitespace-nowrap">
+        <h1 className="font-sans text-4xl sm:text-5xl md:text-7xl text-sky-950 font-bold leading-tight mb-8 tracking-tight">
           {content.names.first} <span className="text-sky-400">&</span>{" "}
           {content.names.second}
         </h1>

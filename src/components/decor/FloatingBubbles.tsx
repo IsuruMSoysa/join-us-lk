@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 
 type FloatingBubblesProps = {
@@ -6,6 +7,8 @@ type FloatingBubblesProps = {
   maxSize?: number;
   color?: string;
   maxOpacity?: number;
+  glowColor?: string;
+  borderColor?: string;
 };
 
 export function FloatingBubbles({
@@ -14,27 +17,31 @@ export function FloatingBubbles({
   maxSize = 56,
   color = "rgba(14, 165, 233, 0.35)",
   maxOpacity = 0.75,
+  glowColor = "rgba(14, 165, 233, 0.22)",
+  borderColor = "rgba(255, 255, 255, 0.6)",
 }: FloatingBubblesProps) {
-  const bubbles = Array.from({ length: count }).map((_, i) => {
-    const size = Math.random() * (maxSize - minSize) + minSize;
-    const startX = Math.random() * 100; // left offset in %
-    const driftA = Math.random() * 60 - 30; // px
-    const driftB = Math.random() * 100 - 50; // px
-    const driftC = Math.random() * 80 - 40; // px
-    const duration = Math.random() * 10 + 10; // 10s to 20s
-    const delay = Math.random() * 10;
+  const bubbles = useMemo(() => {
+    return Array.from({ length: count }).map((_, i) => {
+      const size = Math.random() * (maxSize - minSize) + minSize;
+      const startX = Math.random() * 100; // left offset in %
+      const driftA = Math.random() * 60 - 30; // px
+      const driftB = Math.random() * 100 - 50; // px
+      const driftC = Math.random() * 80 - 40; // px
+      const duration = Math.random() * 10 + 10; // 10s to 20s
+      const delay = Math.random() * 10;
 
-    return {
-      id: i,
-      size,
-      startX: `${startX}%`,
-      driftA,
-      driftB,
-      driftC,
-      duration,
-      delay,
-    };
-  });
+      return {
+        id: i,
+        size,
+        startX: `${startX}%`,
+        driftA,
+        driftB,
+        driftC,
+        duration,
+        delay,
+      };
+    });
+  }, [count, maxSize, minSize]);
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -66,9 +73,9 @@ export function FloatingBubbles({
             height: bubble.size,
             borderRadius: "50%",
             background: `radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.55) 20%, transparent 48%), ${color}`,
-            border: "1px solid rgba(255, 255, 255, 0.6)",
+            border: `1px solid ${borderColor}`,
             boxShadow:
-              "0 8px 24px rgba(14, 165, 233, 0.22), inset 0 0 10px rgba(255, 255, 255, 0.35)",
+              `0 8px 24px ${glowColor}, inset 0 0 10px rgba(255, 255, 255, 0.35)`,
           }}
         />
       ))}

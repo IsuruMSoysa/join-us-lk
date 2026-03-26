@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { loginAdmin } from "../../lib/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
@@ -23,9 +24,12 @@ export function AdminLogin() {
           setLoading(true);
           try {
             await loginAdmin(email, password);
+            toast.success("Signed in.");
             navigate("/admin/sites");
           } catch {
-            setError("Invalid admin credentials.");
+            const msg = "Invalid admin credentials.";
+            setError(msg);
+            toast.error(msg);
           } finally {
             setLoading(false);
           }

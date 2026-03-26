@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import { getSites, setSiteStatus } from "../../lib/firestore/sites";
 import { type SiteDocument } from "../../types/site";
 import { Button } from "../../components/ui/button";
@@ -41,6 +42,13 @@ export function SitesListPage() {
     try {
       await setSiteStatus(site.id, nextStatus);
       await refreshSites();
+      toast.success(
+        nextStatus === "published"
+          ? `Published site "${site.slug}".`
+          : `Unpublished site "${site.slug}".`,
+      );
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to update site status.");
     } finally {
       setBusySiteId(null);
     }

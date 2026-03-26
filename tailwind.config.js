@@ -12,6 +12,7 @@ export default {
         charcoal: "#1A1A1A",
       },
       fontFamily: {
+        display: ["Fredoka", "Outfit", "sans-serif"],
         round: ["Outfit", "sans-serif"],
         handwritten: ["'Dancing Script'", "cursive"],
         sans: ["Inter", "sans-serif"],

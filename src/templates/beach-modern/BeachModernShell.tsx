@@ -37,14 +37,16 @@ function BeachModernBackground() {
         className="absolute -bottom-40 -left-40 w-160 h-160 bg-blue-500/10 rounded-full blur-[100px]"
       />
 
-      {/* Beach/Bubble animations */}
-      <FloatingBubbles
-        count={24}
-        minSize={20}
-        maxSize={68}
-        color="rgba(56, 189, 248, 0.45)"
-        maxOpacity={0.9}
-      />
+      {/* Beach/Bubble animations - disabled on small screens for performance */}
+      <div className="">
+        <FloatingBubbles
+          count={16}
+          minSize={20}
+          maxSize={68}
+          color="rgba(56, 189, 248, 0.45)"
+          maxOpacity={0.85}
+        />
+      </div>
     </div>
   );
 }
@@ -59,9 +61,14 @@ function BeachModernFooter({
       <p className="uppercase tracking-[0.2em]">
         © {new Date().getFullYear()} {coupleNames.first} & {coupleNames.second}{" "}
         - Made with ❤️ by{" "}
-        <span className="text-sky-400 hover:text-sky-500 transition-colors">
+        <a
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sky-400 hover:text-sky-500 transition-colors underline"
+        >
           JoinUs.lk
-        </span>
+        </a>
       </p>
     </footer>
   );

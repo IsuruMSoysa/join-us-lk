@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { FirebaseError } from "firebase/app";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuthUser } from "../../lib/auth";
@@ -180,8 +181,15 @@ export function PortalUsersPage() {
                               }));
                               return;
                             }
-                            await approvePortalUser(u.uid, siteIds);
-                            await refresh();
+                            try {
+                              await approvePortalUser(u.uid, siteIds);
+                              await refresh();
+                              toast.success(`Approved ${u.displayName}.`);
+                            } catch (err) {
+                              const msg = err instanceof Error ? err.message : "Failed to approve portal user.";
+                              setSaveErrorByUser((prev) => ({ ...prev, [u.uid]: msg }));
+                              toast.error(msg);
+                            }
                           }}
                         >
                           Approve
@@ -190,8 +198,16 @@ export function PortalUsersPage() {
                           size="sm"
                           variant="destructive"
                           onClick={async () => {
-                            await revokePortalUser(u.uid);
-                            await refresh();
+                            setSaveErrorByUser((prev) => ({ ...prev, [u.uid]: "" }));
+                            try {
+                              await revokePortalUser(u.uid);
+                              await refresh();
+                              toast.success(`Revoked approval for ${u.displayName}.`);
+                            } catch (err) {
+                              const msg = err instanceof Error ? err.message : "Failed to revoke portal user approval.";
+                              setSaveErrorByUser((prev) => ({ ...prev, [u.uid]: msg }));
+                              toast.error(msg);
+                            }
                           }}
                         >
                           Revoke

@@ -370,6 +370,9 @@ export function PortalDashboard() {
   const handleLogout = async () => {
     try {
       await logoutAdmin();
+      toast.success("Logged out.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to log out.");
     } finally {
       sessionStorage.removeItem("portalClientId");
       sessionStorage.removeItem("portalSiteIds");
@@ -562,7 +565,16 @@ export function PortalDashboard() {
                               <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={() => navigator.clipboard.writeText(invitee.url)}
+                                onClick={async () => {
+                                  try {
+                                    await navigator.clipboard.writeText(invitee.url);
+                                    toast.success("Invitee URL copied.");
+                                  } catch (err) {
+                                    toast.error(
+                                      err instanceof Error ? err.message : "Failed to copy URL.",
+                                    );
+                                  }
+                                }}
                               >
                                 Copy URL
                               </Button>

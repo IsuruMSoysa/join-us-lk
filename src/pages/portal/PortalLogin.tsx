@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 import { loginWithGoogle, logoutAdmin } from "../../lib/auth";
 import {
   getPortalUser,
@@ -44,6 +45,7 @@ export function PortalLogin() {
             if (!portalUser?.approved) {
               await logoutAdmin();
               setMessage("Your account is pending admin approval.");
+              toast.error("Your account is pending admin approval.");
               return;
             }
 
@@ -54,9 +56,10 @@ export function PortalLogin() {
             );
             navigate("/portal/dashboard");
           } catch (err) {
-            setError(
-              err instanceof Error ? err.message : "Google sign-in failed.",
-            );
+            const msg =
+              err instanceof Error ? err.message : "Google sign-in failed.";
+            setError(msg);
+            toast.error(msg);
             return;
           }
         }}

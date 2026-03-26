@@ -31,6 +31,11 @@ const PortalUsersPage = lazy(() =>
     default: m.PortalUsersPage,
   })),
 );
+const ShowcaseProjectsPage = lazy(() =>
+  import("./pages/admin/ShowcaseProjectsPage").then((m) => ({
+    default: m.ShowcaseProjectsPage,
+  })),
+);
 
 function RequireAdminAuth() {
   const { user, isAdmin, loading } = useAuthUser();
@@ -67,6 +72,7 @@ export default function App() {
             <Route index element={<Navigate to="/admin/sites" replace />} />
             <Route path="sites" element={<SitesListPage />} />
             <Route path="portal-users" element={<PortalUsersPage />} />
+            <Route path="showcase" element={<ShowcaseProjectsPage />} />
             <Route path="sites/new" element={<SiteFormPage />} />
             <Route path="sites/:siteId" element={<SiteFormPage />} />
             <Route path="sites/:siteId/invitees" element={<SiteInviteesPage />} />

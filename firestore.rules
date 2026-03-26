@@ -41,6 +41,11 @@ service cloud.firestore {
       allow update, delete: if isAdmin();
     }
 
+    match /showcaseProjects/{projectId} {
+      allow read: if resource.data.published == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
     match /sites/{siteId} {
       // Public read only for published sites
       allow read: if resource.data.status == "published" || isAdmin() || canAccessSite(siteId);
@@ -49,7 +54,11 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
 
       match /invitees/{inviteeId} {
-        allow read: if isAdmin() || canAccessSite(siteId);
+        allow read: if
+          // Allow public reads for invitees of published sites
+          get(/databases/$(database)/documents/sites/$(siteId)).data.status == "published"
+          || isAdmin()
+          || canAccessSite(siteId);
         allow create, update, delete: if isAdmin() || canAccessSite(siteId);
       }
 

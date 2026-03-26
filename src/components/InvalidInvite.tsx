@@ -22,10 +22,17 @@ export function InvalidInvite({ firstName, secondName }: InvalidInviteProps) {
           to get the correct invitation link.
         </p>
         <p className="font-handwritten text-xl text-maroon">
-          With love, {firstName} &amp; {secondName}
+          With love,&nbsp;
+          <a
+            href="/"
+            className="underline hover:text-maroon/80 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {firstName} &amp; {secondName}
+          </a>
         </p>
       </div>
     </div>
   );
 }
-

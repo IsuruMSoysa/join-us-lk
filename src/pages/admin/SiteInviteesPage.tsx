@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 import { addInvitee, getInvitees, removeInvitee } from "../../lib/firestore/invitees";
 import { getSiteById } from "../../lib/firestore/sites";
 import { getAppBaseUrl } from "../../lib/urls";
@@ -54,10 +55,17 @@ export function SiteInviteesPage() {
         className="grid md:grid-cols-3 gap-3"
         onSubmit={async (e) => {
           e.preventDefault();
-          await addInvitee(siteId, { displayName, slug });
-          setDisplayName("");
-          setSlug("");
-          await refresh();
+          try {
+            await addInvitee(siteId, { displayName, slug });
+            toast.success("Invitee added.");
+            setDisplayName("");
+            setSlug("");
+            await refresh();
+          } catch (err) {
+            toast.error(
+              err instanceof Error ? err.message : "Failed to add invitee.",
+            );
+          }
         }}
       >
         <Input
@@ -98,15 +106,35 @@ export function SiteInviteesPage() {
                     <TableCell className="max-w-[260px] truncate text-text/70">{invitee.url}</TableCell>
                     <TableCell>
                       <div className="flex justify-end gap-2">
-                        <Button variant="outline" size="sm" onClick={() => navigator.clipboard.writeText(invitee.url)}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={async () => {
+                            try {
+                              await navigator.clipboard.writeText(invitee.url);
+                              toast.success("Invitee URL copied.");
+                            } catch (err) {
+                              toast.error(
+                                err instanceof Error ? err.message : "Failed to copy URL.",
+                              );
+                            }
+                          }}
+                        >
                           Copy URL
                         </Button>
                         <Button
                           variant="destructive"
                           size="sm"
                           onClick={async () => {
-                            await removeInvitee(siteId, invitee.id);
-                            await refresh();
+                            try {
+                              await removeInvitee(siteId, invitee.id);
+                              toast.success("Invitee removed.");
+                              await refresh();
+                            } catch (err) {
+                              toast.error(
+                                err instanceof Error ? err.message : "Failed to remove invitee.",
+                              );
+                            }
                           }}
                         >
                           Remove

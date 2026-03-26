@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Dancing+Script:wght@400;700&family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Outfit:wght@400;700&family=Dancing+Script:wght@400;700&family=Inter:wght@400;500;600&display=swap");
 
 @import "tailwindcss";
 
@@ -30,6 +30,7 @@
   --rsvp-glow: #00000040;
 
   --font-round: "Outfit", sans-serif;
+  --font-display: "Fredoka", "Outfit", sans-serif;
   --font-handwritten: "Dancing Script", cursive;
 }
 
@@ -70,6 +71,16 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid color-mix(in srgb, var(--color-background) 15%, transparent);
+}
+
+.glass-landing {
+  background: color-mix(in srgb, var(--color-background) 68%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 22%, transparent);
+  box-shadow:
+    0 8px 32px color-mix(in srgb, var(--color-text) 10%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-background) 55%, transparent);
 }
 
 .rsvp-panel {
@@ -187,4 +198,10 @@ body {
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float {
+    animation: none;
+  }
 }

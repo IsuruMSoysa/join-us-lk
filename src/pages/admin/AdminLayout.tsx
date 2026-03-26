@@ -1,4 +1,5 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { logoutAdmin } from "../../lib/auth";
 import { Button } from "../../components/ui/button";
 import { brand } from "../../config/brand";
@@ -17,6 +18,9 @@ export function AdminLayout() {
             <Link to="/admin/portal-users" className="hover:text-secondary">
               Portal Users (Approvals)
             </Link>
+            <Link to="/admin/showcase" className="hover:text-secondary">
+              Landing showcase
+            </Link>
             <Link to="/admin/sites/new" className="hover:text-secondary">
               New Site
             </Link>
@@ -26,7 +30,12 @@ export function AdminLayout() {
           <Button
             variant="outline"
             onClick={async () => {
-              await logoutAdmin();
+              try {
+                await logoutAdmin();
+                toast.success("Logged out.");
+              } catch (err) {
+                toast.error(err instanceof Error ? err.message : "Failed to log out.");
+              }
               navigate("/admin/login");
             }}
           >

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 import { listPortalUsers, type PortalUser } from "../../lib/firestore/portalUsers";
 import { createSite, getSiteById, getSites, updateSite } from "../../lib/firestore/sites";
 import { type SiteDocument } from "../../types/site";
@@ -445,12 +446,17 @@ export function SiteFormPage() {
             },
           };
 
-          if (siteId) {
-            await updateSite(siteId, payload);
-          } else {
-            await createSite(payload);
+          try {
+            if (siteId) {
+              await updateSite(siteId, payload);
+            } else {
+              await createSite(payload);
+            }
+            toast.success(siteId ? "Site updated." : "Site created.");
+            navigate("/admin/sites");
+          } catch (err) {
+            toast.error(err instanceof Error ? err.message : "Failed to save site.");
           }
-          navigate("/admin/sites");
         })}
       >
         <div className="md:col-span-2">
