@@ -1,21 +1,55 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# join-us-lk - Invitation Platform
 
-# Run and deploy your AI Studio app
+`join-us-lk` is a commercial invitation platform for event websites with:
+- Dynamic template rendering
+- Firebase-backed site configuration, invitees, and RSVPs
+- Admin panel for creating and managing client sites
+- Client portal for RSVP viewing, invitee links, and Excel export
 
-This contains everything you need to run your app locally.
+## Tech Stack
 
-View your app in AI Studio: https://ai.studio/apps/c275932e-7cc4-410b-8fe1-0375ab2aa078
+- React + Vite + TypeScript
+- Firebase (Auth, Firestore)
+- Tailwind CSS
 
-## Run Locally
-
-**Prerequisites:**  Node.js
-
+## Getting Started
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. (Optional) For RSVP → Google Sheet: follow [google-apps-script/README.md](google-apps-script/README.md) and set `GOOGLE_SHEETS_SCRIPT_URL` in `.env` or `.env.local`.
-4. Run the app:
+2. Copy `.env.example` to `.env` and fill Firebase variables.
+3. Run development server:
    `npm run dev`
+4. Type-check:
+   `npm run lint`
+
+## Environment Variables
+
+Use the values in `.env.example`:
+
+```
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_APP_ID=
+VITE_BASE_URL=http://localhost:3000
+```
+
+## Routes
+
+- `/` - Business landing page
+- `/admin/login` - Admin login
+- `/admin/*` - Admin management area
+- `/portal` - Client Google sign-in + approval check
+- `/portal/dashboard` - Client RSVP and invitee dashboard
+- `/:siteSlug` - Event website
+- `/:siteSlug/:inviteeSlug` - Personalized invite link
+
+## Gallery Images (Manual URLs)
+
+Use direct image URLs in the admin gallery fields. Recommended sources:
+
+- Public files under your hosting path (for example `/images/photo-1.webp`)
+- Direct Google Cloud Storage object URLs
+  (`https://storage.googleapis.com/<bucket>/<object-path>`)
+
+The app renders gallery image URLs exactly as entered.

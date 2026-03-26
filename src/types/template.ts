@@ -34,15 +34,26 @@ export type EventContent = {
   submitRsvpLabel: string;
 };
 
-export type ThemeConfig = {
-  themeClassName: string;
-  showBackgroundTexture: boolean;
-  backgroundTextureImageUrl?: string;
+export type ThemeColors = {
+  primary: string;
+  secondary: string;
+  accent: string;
+  background: string;
+  text: string;
+  muted: string;
 };
 
-export type InviteeConfig = {
-  allowedSlugs: readonly string[];
-  defaultGuestLabel: string;
+export type ThemeFonts = {
+  heading: string;
+  body: string;
+  handwritten: string;
+};
+
+export type ThemeConfig = {
+  colors: ThemeColors;
+  fonts: ThemeFonts;
+  showBackgroundTexture: boolean;
+  backgroundTextureImageUrl?: string;
 };
 
 export type SectionConfig = {
@@ -64,11 +75,16 @@ export type TemplateConfig = {
 
 export type TemplateDefinition = {
   id: string;
-  routeBase: string;
-  config: TemplateConfig;
+  name: string;
+  description: string;
+  sectionKeys: SectionKey[];
+  componentPath: string;
+};
+
+export type SiteTemplateDefaults = {
   content: EventContent;
+  config: TemplateConfig;
   theme: ThemeConfig;
-  invitees: InviteeConfig;
   assets: {
     heroRingImageUrl: string;
     mapEmbedSrc: string;
@@ -78,9 +94,18 @@ export type TemplateDefinition = {
 
 export type InviteContext = {
   pathname: string;
+  siteId: string;
+  siteSlug: string;
   inviteeSlug: string;
   inviteeName: string;
   personalized: boolean;
   validInvite: boolean;
-  template: TemplateDefinition;
+  content: EventContent;
+  config: TemplateConfig;
+  theme: ThemeConfig;
+  assets: {
+    heroRingImageUrl: string;
+    mapEmbedSrc: string;
+    galleryImages: string[];
+  };
 };

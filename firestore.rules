@@ -1,0 +1,61 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isPortalUser() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/portalUsers/$(request.auth.uid))
+        && get(/databases/$(database)/documents/portalUsers/$(request.auth.uid)).data.approved == true;
+    }
+
+    function canAccessSite(siteId) {
+      let portalUser = get(/databases/$(database)/documents/portalUsers/$(request.auth.uid)).data;
+      let siteDoc = get(/databases/$(database)/documents/sites/$(siteId)).data;
+      return isPortalUser()
+        && (
+          siteId in portalUser.siteIds
+          || (siteDoc.slug != null && siteDoc.slug in portalUser.siteIds)
+        );
+    }
+
+    match /clients/{clientId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /admins/{uid} {
+      allow read: if isAdmin() || (request.auth != null && request.auth.uid == uid);
+      allow write: if isAdmin();
+    }
+
+    match /portalUsers/{uid} {
+      allow read: if isAdmin() || (request.auth != null && request.auth.uid == uid);
+      allow create: if request.auth != null && request.auth.uid == uid;
+      allow update, delete: if isAdmin();
+    }
+
+    match /sites/{siteId} {
+      // Public read only for published sites
+      allow read: if resource.data.status == "published" || isAdmin() || canAccessSite(siteId);
+
+      // Admin creates/updates/publishes sites
+      allow create, update, delete: if isAdmin();
+
+      match /invitees/{inviteeId} {
+        allow read: if isAdmin() || canAccessSite(siteId);
+        allow create, update, delete: if isAdmin() || canAccessSite(siteId);
+      }
+
+      match /rsvps/{rsvpId} {
+        // Anyone can submit RSVP.
+        allow create: if true;
+        allow read: if isAdmin() || canAccessSite(siteId);
+        allow update, delete: if isAdmin();
+      }
+    }
+  }
+}

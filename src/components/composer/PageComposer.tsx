@@ -1,13 +1,23 @@
 import { InvalidInvite } from "../InvalidInvite";
-import { sectionRegistry } from "../../config/sectionRegistry";
 import { type InviteContext, type TemplateConfig } from "../../types/template";
+import { type ComponentType } from "react";
 
 type PageComposerProps = {
   config: TemplateConfig;
   context: InviteContext;
+  sectionRegistry: Record<
+    string,
+    ComponentType<{
+      context: InviteContext;
+    }>
+  >;
 };
 
-export function PageComposer({ config, context }: PageComposerProps) {
+export function PageComposer({
+  config,
+  context,
+  sectionRegistry,
+}: PageComposerProps) {
   if (
     context.personalized &&
     !context.validInvite &&
@@ -15,8 +25,8 @@ export function PageComposer({ config, context }: PageComposerProps) {
   ) {
     return (
       <InvalidInvite
-        firstName={context.template.content.names.first}
-        secondName={context.template.content.names.second}
+        firstName={context.content.names.first}
+        secondName={context.content.names.second}
       />
     );
   }
