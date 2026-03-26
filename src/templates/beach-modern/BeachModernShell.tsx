@@ -77,7 +77,7 @@ export function BeachModernShell({
     <div className="min-h-screen overflow-x-hidden selection:bg-sky-200/50 bg-[#f0f9ff] font-sans">
       {showBackgroundTexture && backgroundTextureImageUrl && (
         <div
-          className="fixed inset-0 z-0 w-full max-w-none bg-center bg-no-repeat pointer-events-none opacity-[0.03]"
+          className="fixed inset-0 z-0 w-full max-w-none bg-center bg-no-repeat pointer-events-none opacity-[0.1]"
           style={{
             backgroundImage: `url(${backgroundTextureImageUrl})`,
             backgroundSize: "cover",
