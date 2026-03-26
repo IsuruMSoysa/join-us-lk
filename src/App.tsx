@@ -33,11 +33,10 @@ const PortalUsersPage = lazy(() =>
 );
 
 function RequireAdminAuth() {
-  const { user, loading } = useAuthUser();
-  const superAdminEmail = import.meta.env.VITE_SUPER_ADMIN_EMAIL;
+  const { user, isAdmin, loading } = useAuthUser();
   if (loading) return <div className="min-h-screen grid place-items-center">Loading...</div>;
   if (!user) return <Navigate to="/admin/login" replace />;
-  if (superAdminEmail && user.email !== superAdminEmail) {
+  if (!isAdmin) {
     return <Navigate to="/portal?reason=admin-access-required" replace />;
   }
   return <Outlet />;

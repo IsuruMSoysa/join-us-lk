@@ -6,22 +6,39 @@ import {
   signOut,
   type User,
 } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 
 export function useAuthUser() {
   const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (nextUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (nextUser) => {
+      setLoading(true);
       setUser(nextUser);
-      setLoading(false);
+
+      if (!nextUser) {
+        setIsAdmin(false);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const adminDoc = await getDoc(doc(db, "admins", nextUser.uid));
+        setIsAdmin(adminDoc.exists());
+      } catch {
+        setIsAdmin(false);
+      } finally {
+        setLoading(false);
+      }
     });
     return () => unsubscribe();
   }, []);
 
-  return { user, loading };
+  return { user, isAdmin, loading };
 }
 
 export async function loginAdmin(email: string, password: string) {

@@ -34,6 +34,12 @@ VITE_FIREBASE_APP_ID=
 VITE_BASE_URL=http://localhost:3000
 ```
 
+### Admin Access Security
+
+- Do not use frontend environment variables for admin authorization checks.
+- Admin access is determined by an `admins/{uid}` document and enforced by Firestore rules.
+- Optional compatibility: rules also accept Firebase custom claims (`admin: true`) if you choose to use them later.
+
 ## Routes
 
 - `/` - Business landing page

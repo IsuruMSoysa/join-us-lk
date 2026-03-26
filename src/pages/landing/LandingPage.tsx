@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { brand } from "../../config/brand";
+import { brand, getDefaultDocumentTitle } from "../../config/brand";
 import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 
 export function LandingPage() {
+  useEffect(() => {
+    document.title = getDefaultDocumentTitle();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-text">
       <main className="max-w-6xl mx-auto px-6 py-12 md:py-20 space-y-20">

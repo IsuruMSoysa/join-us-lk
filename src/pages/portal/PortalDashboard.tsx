@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   createInvitee,
   deleteInvitee,
@@ -8,7 +9,7 @@ import {
 } from "../../lib/firestore/invitees";
 import { getRsvps } from "../../lib/firestore/rsvps";
 import { getSiteById, getSiteBySlug } from "../../lib/firestore/sites";
-import { useAuthUser } from "../../lib/auth";
+import { logoutAdmin, useAuthUser } from "../../lib/auth";
 import { getPortalUser } from "../../lib/firestore/portalUsers";
 import { downloadExcel, readSpreadsheetRows } from "../../utils/excel";
 import { slugify } from "../../utils/slug";
@@ -57,6 +58,7 @@ type RsvpRow = {
 };
 
 export function PortalDashboard() {
+  const navigate = useNavigate();
   const { user } = useAuthUser();
   const [activeTab, setActiveTab] = useState("rsvps");
   const [siteId, setSiteId] = useState("");
@@ -212,6 +214,9 @@ export function PortalDashboard() {
       })),
     [invitees, baseUrl, siteSlug],
   );
+  const profileName = user?.displayName?.trim() || user?.email || "Portal User";
+  const profilePhotoUrl = user?.photoURL?.trim() || "";
+  const profileInitial = profileName.charAt(0).toUpperCase();
 
   const createUniqueSlug = (baseSlug: string, usedSlugs: Set<string>) => {
     const root = slugify(baseSlug) || "invitee";
@@ -362,11 +367,41 @@ export function PortalDashboard() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await logoutAdmin();
+    } finally {
+      sessionStorage.removeItem("portalClientId");
+      sessionStorage.removeItem("portalSiteIds");
+      navigate("/portal");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-text px-6 py-8">
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-3xl font-bold">Client Dashboard</h1>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 rounded-full border border-secondary/20 px-2 py-1">
+              {profilePhotoUrl ? (
+                <img
+                  src={profilePhotoUrl}
+                  alt={`${profileName} profile`}
+                  referrerPolicy="no-referrer"
+                  className="h-8 w-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary/20 text-xs font-semibold">
+                  {profileInitial}
+                </div>
+              )}
+              <span className="max-w-[180px] truncate text-sm font-medium">{profileName}</span>
+            </div>
+            <Button variant="outline" onClick={handleLogout}>
+              Logout
+            </Button>
+          </div>
         </div>
 
         {assignedSiteIds.length === 0 ? (

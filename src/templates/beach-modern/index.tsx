@@ -2,6 +2,7 @@ import { PageComposer } from "../../components/composer/PageComposer";
 import { BeachModernShell } from "./BeachModernShell";
 import { sectionRegistry } from "./sectionRegistry";
 import { type InviteContext } from "../../types/template";
+import beachBackgroundImage from "./assets/beach-bg.svg";
 
 type BeachModernTemplateProps = {
   context: InviteContext;
@@ -13,7 +14,10 @@ export default function BeachModernTemplate({
   return (
     <BeachModernShell
       coupleNames={context.content.names}
-      showBackgroundTexture={false}
+      showBackgroundTexture={context.theme.showBackgroundTexture}
+      backgroundTextureImageUrl={
+        context.theme.backgroundTextureImageUrl ?? beachBackgroundImage
+      }
     >
       <PageComposer
         config={context.config}
