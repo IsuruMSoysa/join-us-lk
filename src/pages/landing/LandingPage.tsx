@@ -107,8 +107,8 @@ export function LandingPage() {
   const [showcaseError, setShowcaseError] = useState<string | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  const whatsappNumberDigitsOnly = "94771534457";
-  const whatsappDisplayNumber = "+94771534457";
+  const whatsappNumberDigitsOnly = "94789436808";
+  const whatsappDisplayNumber = "+94789436808";
   const whatsappText = "Hi isuru. I'd like a quote for an invitation website.";
   const whatsappHref = `https://wa.me/${whatsappNumberDigitsOnly}?text=${encodeURIComponent(whatsappText)}`;
 
@@ -199,9 +199,13 @@ export function LandingPage() {
               href="/"
               className="font-display text-xl md:text-2xl font-bold text-secondary tracking-tight"
             >
-              {brand.displayName}
+              <img
+                src={"/images/JoinUsLk.png"}
+                alt={`Brand Logo`}
+                className="h-8 w-auto"
+                referrerPolicy="no-referrer"
+              />
             </a>
-
             {/* Desktop nav */}
             <nav className="hidden md:flex flex-1 items-center justify-center gap-x-5 gap-y-2 text-sm font-medium text-text/85">
               <a
@@ -253,7 +257,9 @@ export function LandingPage() {
             <button
               type="button"
               className="ml-auto inline-flex items-center justify-center rounded-xl border border-secondary/30 bg-background/60 px-2 py-2 text-secondary shadow-sm md:hidden"
-              aria-label={mobileNavOpen ? "Close navigation" : "Open navigation"}
+              aria-label={
+                mobileNavOpen ? "Close navigation" : "Open navigation"
+              }
               aria-expanded={mobileNavOpen}
               onClick={() => setMobileNavOpen((open) => !open)}
             >
@@ -670,9 +676,17 @@ export function LandingPage() {
 
         <footer className="border-t border-secondary/15 px-6 py-10">
           <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-text/70">
-            <span className="font-display font-bold text-text">
-              {brand.displayName}
-            </span>
+            <a
+              href="/"
+              className="font-display text-xl md:text-2xl font-bold text-secondary tracking-tight"
+            >
+              <img
+                src={"/images/JoinUsLk.png"}
+                alt={`Brand Logo`}
+                className="h-5 w-auto"
+                referrerPolicy="no-referrer"
+              />
+            </a>
             <div className="flex flex-wrap items-center justify-center gap-6">
               <a
                 href={`mailto:${brand.supportEmail}`}
