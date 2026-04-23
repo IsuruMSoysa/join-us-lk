@@ -20,9 +20,14 @@ function calculateTimeLeft(eventDateTime: string): TimeLeft {
 
 type CountdownTimerProps = {
   eventDateTime: string;
+  /** Sharp dark panels for corporate / space themes */
+  variant?: "classic" | "corporate";
 };
 
-export function CountdownTimer({ eventDateTime }: CountdownTimerProps) {
+export function CountdownTimer({
+  eventDateTime,
+  variant = "classic",
+}: CountdownTimerProps) {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(eventDateTime));
 
   useEffect(() => {
@@ -32,9 +37,11 @@ export function CountdownTimer({ eventDateTime }: CountdownTimerProps) {
     return () => clearInterval(timer);
   }, [eventDateTime]);
 
+  const isCorporate = variant === "corporate";
+
   return (
-    <div className="mt-16 relative">
-      <div className="flex justify-center gap-4 md:gap-10">
+    <div className={isCorporate ? "mt-0 relative" : "mt-16 relative"}>
+      <div className="flex justify-center gap-3 sm:gap-6 md:gap-10">
         {Object.entries(timeLeft).map(([interval, value], idx) => (
           <motion.div
             key={interval}
@@ -43,12 +50,30 @@ export function CountdownTimer({ eventDateTime }: CountdownTimerProps) {
             transition={{ delay: 1 + idx * 0.1 }}
             className="flex flex-col items-center"
           >
-            <div className="glass w-16 h-16 md:w-24 md:h-24 flex items-center justify-center rounded-2xl border-gold/10 shadow-inner">
-              <span className="font-round text-2xl md:text-4xl font-bold text-olive">
+            <div
+              className={
+                isCorporate
+                  ? "w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 flex items-center justify-center rounded-lg border border-white/15 bg-white/5 backdrop-blur-md shadow-inner shadow-black/40 skew-x-[-6deg]"
+                  : "glass w-16 h-16 md:w-24 md:h-24 flex items-center justify-center rounded-2xl border-gold/10 shadow-inner"
+              }
+            >
+              <span
+                className={
+                  isCorporate
+                    ? "rise-silver-numeral skew-x-[6deg] text-xl sm:text-2xl md:text-4xl font-black tabular-nums"
+                    : "font-round text-2xl md:text-4xl font-bold text-olive"
+                }
+              >
                 {value.toString().padStart(2, "0")}
               </span>
             </div>
-            <span className="mt-2 text-[10px] md:text-xs uppercase tracking-[0.2em] text-coffee/60 font-round font-bold">
+            <span
+              className={
+                isCorporate
+                  ? "mt-2 text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.25em] text-blue-300/80 font-semibold"
+                  : "mt-2 text-[10px] md:text-xs uppercase tracking-[0.2em] text-coffee/60 font-round font-bold"
+              }
+            >
               {interval}
             </span>
           </motion.div>

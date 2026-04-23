@@ -16,9 +16,18 @@ export const templateRegistry: Record<string, TemplateDefinition> = {
     sectionKeys: ["hero", "details", "gallery", "map", "rsvp"],
     componentPath: "beach-modern",
   },
+  "rise-beyond": {
+    id: "rise-beyond",
+    name: "Rise Beyond",
+    description:
+      "High-energy corporate event invitation with space-themed visuals",
+    sectionKeys: ["hero", "details", "gallery", "map", "rsvp"],
+    componentPath: "rise-beyond",
+  },
 };
 
 export const templateComponents: Record<string, ReturnType<typeof lazy>> = {
   "wedding-classic": lazy(() => import("./wedding-classic")),
   "beach-modern": lazy(() => import("./beach-modern")),
+  "rise-beyond": lazy(() => import("./rise-beyond/index")),
 };
