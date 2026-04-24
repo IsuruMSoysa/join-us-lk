@@ -89,6 +89,8 @@ export type SiteTemplateDefaults = {
     heroRingImageUrl: string;
     mapEmbedSrc: string;
     galleryImages: string[];
+    /** Premium event logo (e.g. Union Awards hero). */
+    eventLogoUrl?: string;
   };
 };
 
@@ -107,5 +109,6 @@ export type InviteContext = {
     heroRingImageUrl: string;
     mapEmbedSrc: string;
     galleryImages: string[];
+    eventLogoUrl?: string;
   };
 };

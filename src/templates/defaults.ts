@@ -162,6 +162,82 @@ const templateDefaults: Record<string, SiteTemplateDefaults> = {
       ],
     },
   },
+  "union-awards": {
+    config: {
+      metadata: {
+        title: `${brand.displayName} — Union Assurance Annual Awards`,
+        invalidInviteTitle: "Invalid access",
+      },
+      features: {
+        showInvalidInvitePage: true,
+      },
+      sections: [
+        { key: "hero", enabled: true },
+        { key: "details", enabled: true },
+        { key: "gallery", enabled: true },
+        { key: "map", enabled: true },
+        { key: "rsvp", enabled: true, requiresValidInvite: true },
+      ],
+    },
+    content: {
+      names: { first: "Union Assurance", second: "Annual Awards 2026" },
+      eventDateTime: "2026-06-20T18:00:00",
+      eventTime: "6:00 PM — 11:00 PM",
+      venueName: "Grand Ballroom, Cinnamon Grand Colombo",
+      venueAddress: "77 Galle Road, Colombo 03",
+      rsvpByDate: "June 01, 2026",
+      tagline: "Legacy to infinity — a night beyond time.",
+      heroGreeting:
+        "You are cordially invited to celebrate excellence, resilience, and the people who shape our tomorrow.",
+      heroInvite: "Confirm your presence for an evening of prestige and recognition.",
+      quoteText:
+        "The future belongs to those who believe in the beauty of their dreams.",
+      quoteRef: "— Eleanor Roosevelt",
+      detailsTitle: "The evening",
+      detailsDateSubtitle: "Mark the date",
+      detailsTimeSubtitle: "Schedule",
+      detailsMapLinkText: "View venue map",
+      galleryTitle: "Moments through time",
+      mapTitle: "Destination in time",
+      rsvpTitle: "Your commitment",
+      rsvpDeadlineText: "RSVP by",
+      rsvpSuccessAttendingTitle: "You're confirmed",
+      rsvpSuccessAttendingBody:
+        "We received your RSVP. We look forward to hosting you at the Annual Awards.",
+      rsvpSuccessDeclinedTitle: "Response recorded",
+      rsvpSuccessDeclinedBody:
+        "Thank you for letting us know. We hope to see you at a future occasion.",
+      invitePromptNameLabel: "Full name",
+      invitePromptAttendanceLabel: "Will you attend?",
+      invitePromptAttendYesLabel: "Accept with pleasure",
+      invitePromptAttendNoLabel: "Regretfully decline",
+      submitRsvpLabel: "Submit RSVP",
+    },
+    theme: {
+      colors: {
+        primary: "#daa520",
+        secondary: "#ff6600",
+        accent: "#ffb347",
+        background: "#080808",
+        text: "#e8dcc8",
+        muted: "#8b7355",
+      },
+      fonts: {
+        heading: "Montserrat",
+        body: "Montserrat",
+        handwritten: "Montserrat",
+      },
+      showBackgroundTexture: false,
+    },
+    assets: {
+      heroRingImageUrl: "",
+      mapEmbedSrc:
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.014974731634!2d80.0262051!3d7.239130100000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2e3e1821395f1%3A0xeb2264b713646f4b!2sHotel%20Mandakini!5e0!3m2!1sen!2slk!4v1773298620394!5m2!1sen!2slk",
+      galleryImages: ["/images/1.webp", "/images/2.webp", "/images/3.webp"],
+      eventLogoUrl:
+        "https://storage.googleapis.com/gallery_images_join_us_lk/union%20assurance/event%20logo.png",
+    },
+  },
 };
 
 function cloneDefaults(defaults: SiteTemplateDefaults): SiteTemplateDefaults {

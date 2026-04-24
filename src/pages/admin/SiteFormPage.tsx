@@ -45,6 +45,7 @@ type FormValues = {
   invitePromptAttendNoLabel: string;
   submitRsvpLabel: string;
   mapEmbedSrc: string;
+  eventLogoUrl: string;
   backgroundTextureImageUrl: string;
   galleryImages: Array<{ url: string }>;
   primary: string;
@@ -132,6 +133,7 @@ export function SiteFormPage() {
       invitePromptAttendNoLabel: initialTemplateDefaults.content.invitePromptAttendNoLabel,
       submitRsvpLabel: initialTemplateDefaults.content.submitRsvpLabel,
       mapEmbedSrc: initialTemplateDefaults.assets.mapEmbedSrc,
+      eventLogoUrl: initialTemplateDefaults.assets.eventLogoUrl ?? "",
       backgroundTextureImageUrl: initialTemplateDefaults.theme.backgroundTextureImageUrl ?? "",
       galleryImages: initialTemplateDefaults.assets.galleryImages.map((url) => ({ url })),
       primary: initialTemplateDefaults.theme.colors.primary,
@@ -236,6 +238,7 @@ export function SiteFormPage() {
         invitePromptAttendNoLabel: site.content.invitePromptAttendNoLabel,
         submitRsvpLabel: site.content.submitRsvpLabel,
         mapEmbedSrc: site.assets.mapEmbedSrc,
+        eventLogoUrl: site.assets.eventLogoUrl ?? "",
         backgroundTextureImageUrl: site.theme.backgroundTextureImageUrl ?? "",
         galleryImages: site.assets.galleryImages.map((url) => ({ url })),
         primary: site.theme.colors.primary,
@@ -300,6 +303,7 @@ export function SiteFormPage() {
       invitePromptAttendNoLabel: defaults.content.invitePromptAttendNoLabel,
       submitRsvpLabel: defaults.content.submitRsvpLabel,
       mapEmbedSrc: defaults.assets.mapEmbedSrc,
+      eventLogoUrl: defaults.assets.eventLogoUrl ?? "",
       backgroundTextureImageUrl: defaults.theme.backgroundTextureImageUrl ?? "",
       galleryImages: defaults.assets.galleryImages.map((url) => ({ url })),
       primary: defaults.theme.colors.primary,
@@ -440,6 +444,7 @@ export function SiteFormPage() {
             assets: {
               ...baseAssets,
               mapEmbedSrc: values.mapEmbedSrc,
+              eventLogoUrl: values.eventLogoUrl.trim() || undefined,
               galleryImages: values.galleryImages
                 .map((image) => image.url.trim())
                 .filter((image) => image.length > 0),
@@ -638,6 +643,22 @@ export function SiteFormPage() {
             placeholder="Map location link"
             className="w-full px-4 py-3 rounded-xl border border-secondary/20 bg-background"
           />
+        </div>
+
+        <div className="space-y-1 md:col-span-2">
+          <label className="block text-sm font-medium text-text/80" htmlFor="event-logo-url-input">
+            Event logo URL (optional)
+          </label>
+          <input
+            id="event-logo-url-input"
+            {...register("eventLogoUrl")}
+            type="url"
+            placeholder="https://… (Union Awards / hero logo)"
+            className="w-full px-4 py-3 rounded-xl border border-secondary/20 bg-background"
+          />
+          <p className="text-xs text-text/70">
+            Used by the Union Awards template for the main hero logo.
+          </p>
         </div>
 
         <div className="space-y-2 md:col-span-2">

@@ -27,6 +27,7 @@ export type SiteDocument = {
     heroRingImageUrl: string;
     mapEmbedSrc: string;
     galleryImages: string[];
+    eventLogoUrl?: string;
   };
   createdAt?: Timestamp;
   updatedAt?: Timestamp;

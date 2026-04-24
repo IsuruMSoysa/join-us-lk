@@ -21,7 +21,7 @@ function calculateTimeLeft(eventDateTime: string): TimeLeft {
 type CountdownTimerProps = {
   eventDateTime: string;
   /** Sharp dark panels for corporate / space themes */
-  variant?: "classic" | "corporate";
+  variant?: "classic" | "corporate" | "awards";
 };
 
 export function CountdownTimer({
@@ -38,9 +38,12 @@ export function CountdownTimer({
   }, [eventDateTime]);
 
   const isCorporate = variant === "corporate";
+  const isAwards = variant === "awards";
+
+  const rootMargin = isCorporate || isAwards ? "mt-0 relative" : "mt-16 relative";
 
   return (
-    <div className={isCorporate ? "mt-0 relative" : "mt-16 relative"}>
+    <div className={rootMargin}>
       <div className="flex justify-center gap-3 sm:gap-6 md:gap-10">
         {Object.entries(timeLeft).map(([interval, value], idx) => (
           <motion.div
@@ -52,16 +55,28 @@ export function CountdownTimer({
           >
             <div
               className={
-                isCorporate
-                  ? "w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 flex items-center justify-center rounded-lg border border-white/15 bg-white/5 backdrop-blur-md shadow-inner shadow-black/40 skew-x-[-6deg]"
-                  : "glass w-16 h-16 md:w-24 md:h-24 flex items-center justify-center rounded-2xl border-gold/10 shadow-inner"
+                isAwards
+                  ? "w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 flex items-center justify-center border border-[#c9a227]/55 bg-[#0a0a0a]/90 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,215,0,0.12),0_8px_28px_-8px_rgba(212,175,55,0.35)]"
+                  : isCorporate
+                    ? "w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 flex items-center justify-center rounded-lg border border-white/15 bg-white/5 backdrop-blur-md shadow-inner shadow-black/40 skew-x-[-6deg]"
+                    : "glass w-16 h-16 md:w-24 md:h-24 flex items-center justify-center rounded-2xl border-gold/10 shadow-inner"
+              }
+              style={
+                isAwards
+                  ? {
+                      clipPath:
+                        "polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)",
+                    }
+                  : undefined
               }
             >
               <span
                 className={
-                  isCorporate
-                    ? "rise-silver-numeral skew-x-[6deg] text-xl sm:text-2xl md:text-4xl font-black tabular-nums"
-                    : "font-round text-2xl md:text-4xl font-bold text-olive"
+                  isAwards
+                    ? "ua-gold-numeral text-xl sm:text-2xl md:text-4xl font-black tabular-nums tracking-tighter"
+                    : isCorporate
+                      ? "rise-silver-numeral skew-x-[6deg] text-xl sm:text-2xl md:text-4xl font-black tabular-nums"
+                      : "font-round text-2xl md:text-4xl font-bold text-olive"
                 }
               >
                 {value.toString().padStart(2, "0")}
@@ -69,9 +84,11 @@ export function CountdownTimer({
             </div>
             <span
               className={
-                isCorporate
-                  ? "mt-2 text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.25em] text-blue-300/80 font-semibold"
-                  : "mt-2 text-[10px] md:text-xs uppercase tracking-[0.2em] text-coffee/60 font-round font-bold"
+                isAwards
+                  ? "mt-2 text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.28em] text-[#ffb347]/90 font-semibold"
+                  : isCorporate
+                    ? "mt-2 text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.25em] text-blue-300/80 font-semibold"
+                    : "mt-2 text-[10px] md:text-xs uppercase tracking-[0.2em] text-coffee/60 font-round font-bold"
               }
             >
               {interval}

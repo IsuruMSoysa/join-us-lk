@@ -60,9 +60,9 @@ export function RiseBeyondMap({ content, mapEmbedSrc }: RiseBeyondMapProps) {
           </div>
         </div>
 
-        <div className="rise-silver-muted mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-center gap-3 text-sm sm:text-base">
+        <div className="rise-silver-muted mx-auto mt-8 flex w-fit max-w-full flex-col sm:flex-row items-center justify-center gap-3 text-center text-sm sm:text-base sm:text-left">
           <MapPin className="shrink-0 text-red-400/90" size={22} strokeWidth={1.5} />
-          <div className="text-center sm:text-left">
+          <div className="min-w-0 max-w-full sm:max-w-none">
             <p className="rise-silver-body-strong font-bold tracking-tight">
               {content.venueName}
             </p>
