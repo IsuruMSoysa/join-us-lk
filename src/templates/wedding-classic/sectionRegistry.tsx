@@ -40,9 +40,8 @@ const MapSectionAdapter = ({ context }: SectionComponentProps) => (
   <MapSection content={context.content} mapEmbedSrc={context.assets.mapEmbedSrc} />
 );
 
-export const weddingClassicSectionRegistry: Record<
-  SectionKey,
-  ComponentType<SectionComponentProps>
+export const weddingClassicSectionRegistry: Partial<
+  Record<SectionKey, ComponentType<SectionComponentProps>>
 > = {
   hero: HeroSectionAdapter,
   details: DetailsSectionAdapter,

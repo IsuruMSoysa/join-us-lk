@@ -94,7 +94,8 @@ export function ShowcaseProjectsPage() {
         title: form.title.trim(),
         subtitle: form.subtitle.trim(),
         imageUrl: form.imageUrl.trim(),
-        siteSlug: form.siteSlug.trim() || undefined,
+        // Always a string: Firestore rejects `undefined` field values.
+        siteSlug: form.siteSlug.trim(),
         sortOrder: Number(form.sortOrder) || 0,
         published: form.published,
       };

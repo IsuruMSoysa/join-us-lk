@@ -48,9 +48,8 @@ const UnionAwardsRsvpAdapter = ({ context }: SectionComponentProps) => (
   />
 );
 
-export const sectionRegistry: Record<
-  SectionKey,
-  ComponentType<SectionComponentProps>
+export const sectionRegistry: Partial<
+  Record<SectionKey, ComponentType<SectionComponentProps>>
 > = {
   hero: UnionAwardsHeroAdapter,
   details: UnionAwardsDetailsAdapter,

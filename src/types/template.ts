@@ -1,4 +1,17 @@
-export type SectionKey = "hero" | "details" | "gallery" | "map" | "rsvp";
+export type SectionKey =
+  | "hero"
+  | "details"
+  | "orderOfDay"
+  | "gallery"
+  | "map"
+  | "rsvp";
+
+/** One row of the optional "Order of the Day" schedule. */
+export type OrderOfDayItem = {
+  time: string;
+  title: string;
+  description: string;
+};
 
 export type EventContent = {
   names: {
@@ -19,6 +32,14 @@ export type EventContent = {
   detailsDateSubtitle: string;
   detailsTimeSubtitle: string;
   detailsMapLinkText: string;
+  /**
+   * Optional: only templates carrying an "orderOfDay" section use these, and
+   * site documents saved before the section existed have neither key. Site
+   * content is read straight off the Firestore doc without merging template
+   * defaults (see InviteSiteLoader), so consumers must tolerate `undefined`.
+   */
+  orderOfDayTitle?: string;
+  orderOfDayItems?: OrderOfDayItem[];
   galleryTitle: string;
   mapTitle: string;
   rsvpTitle: string;

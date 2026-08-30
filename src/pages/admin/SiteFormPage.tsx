@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { listPortalUsers, type PortalUser } from "../../lib/firestore/portalUsers";
 import { createSite, getSiteById, getSites, updateSite } from "../../lib/firestore/sites";
 import { type SiteDocument } from "../../types/site";
+import { type OrderOfDayItem } from "../../types/template";
 import { templateRegistry } from "../../templates/registry";
 import { getSiteTemplateDefaults } from "../../templates/defaults";
 import { Button } from "../../components/ui/button";
@@ -31,6 +32,8 @@ type FormValues = {
   detailsDateSubtitle: string;
   detailsTimeSubtitle: string;
   detailsMapLinkText: string;
+  orderOfDayTitle: string;
+  orderOfDayItems: OrderOfDayItem[];
   galleryTitle: string;
   mapTitle: string;
   rsvpTitle: string;
@@ -59,6 +62,7 @@ type FormValues = {
   showInvalidInvitePage: boolean;
   sectionHeroEnabled: boolean;
   sectionDetailsEnabled: boolean;
+  sectionOrderOfDayEnabled: boolean;
   sectionGalleryEnabled: boolean;
   sectionMapEnabled: boolean;
   sectionRsvpEnabled: boolean;
@@ -119,6 +123,8 @@ export function SiteFormPage() {
       detailsDateSubtitle: initialTemplateDefaults.content.detailsDateSubtitle,
       detailsTimeSubtitle: initialTemplateDefaults.content.detailsTimeSubtitle,
       detailsMapLinkText: initialTemplateDefaults.content.detailsMapLinkText,
+      orderOfDayTitle: initialTemplateDefaults.content.orderOfDayTitle ?? "",
+      orderOfDayItems: initialTemplateDefaults.content.orderOfDayItems ?? [],
       galleryTitle: initialTemplateDefaults.content.galleryTitle,
       mapTitle: initialTemplateDefaults.content.mapTitle,
       rsvpTitle: initialTemplateDefaults.content.rsvpTitle,
@@ -149,6 +155,9 @@ export function SiteFormPage() {
         initialTemplateDefaults.config.sections.find((s) => s.key === "hero")?.enabled ?? true,
       sectionDetailsEnabled:
         initialTemplateDefaults.config.sections.find((s) => s.key === "details")?.enabled ?? true,
+      sectionOrderOfDayEnabled:
+        initialTemplateDefaults.config.sections.find((s) => s.key === "orderOfDay")?.enabled ??
+        false,
       sectionGalleryEnabled:
         initialTemplateDefaults.config.sections.find((s) => s.key === "gallery")?.enabled ?? true,
       sectionMapEnabled:
@@ -166,11 +175,20 @@ export function SiteFormPage() {
   const [initialSlug, setInitialSlug] = useState("");
   const lastAppliedTemplateRef = useRef<string>("");
   const selectedTemplateId = watch("templateId");
+  const orderOfDaySectionEnabled = watch("sectionOrderOfDayEnabled");
   const { fields: galleryImageFields, append: appendGalleryImage, remove: removeGalleryImage } =
     useFieldArray({
       control,
       name: "galleryImages",
     });
+  const {
+    fields: orderOfDayFields,
+    append: appendOrderOfDayItem,
+    remove: removeOrderOfDayItem,
+  } = useFieldArray({
+    control,
+    name: "orderOfDayItems",
+  });
 
   const existingSlugSet = useMemo(() => {
     return new Set(
@@ -224,6 +242,8 @@ export function SiteFormPage() {
         detailsDateSubtitle: site.content.detailsDateSubtitle,
         detailsTimeSubtitle: site.content.detailsTimeSubtitle,
         detailsMapLinkText: site.content.detailsMapLinkText,
+        orderOfDayTitle: site.content.orderOfDayTitle ?? "",
+        orderOfDayItems: site.content.orderOfDayItems ?? [],
         galleryTitle: site.content.galleryTitle,
         mapTitle: site.content.mapTitle,
         rsvpTitle: site.content.rsvpTitle,
@@ -253,6 +273,8 @@ export function SiteFormPage() {
         sectionHeroEnabled: site.config.sections.find((s) => s.key === "hero")?.enabled ?? true,
         sectionDetailsEnabled:
           site.config.sections.find((s) => s.key === "details")?.enabled ?? true,
+        sectionOrderOfDayEnabled:
+          site.config.sections.find((s) => s.key === "orderOfDay")?.enabled ?? false,
         sectionGalleryEnabled:
           site.config.sections.find((s) => s.key === "gallery")?.enabled ?? true,
         sectionMapEnabled: site.config.sections.find((s) => s.key === "map")?.enabled ?? true,
@@ -289,6 +311,8 @@ export function SiteFormPage() {
       detailsDateSubtitle: defaults.content.detailsDateSubtitle,
       detailsTimeSubtitle: defaults.content.detailsTimeSubtitle,
       detailsMapLinkText: defaults.content.detailsMapLinkText,
+      orderOfDayTitle: defaults.content.orderOfDayTitle ?? "",
+      orderOfDayItems: defaults.content.orderOfDayItems ?? [],
       galleryTitle: defaults.content.galleryTitle,
       mapTitle: defaults.content.mapTitle,
       rsvpTitle: defaults.content.rsvpTitle,
@@ -317,6 +341,8 @@ export function SiteFormPage() {
       showInvalidInvitePage: defaults.config.features.showInvalidInvitePage,
       sectionHeroEnabled: defaults.config.sections.find((s) => s.key === "hero")?.enabled ?? true,
       sectionDetailsEnabled: defaults.config.sections.find((s) => s.key === "details")?.enabled ?? true,
+      sectionOrderOfDayEnabled:
+        defaults.config.sections.find((s) => s.key === "orderOfDay")?.enabled ?? false,
       sectionGalleryEnabled: defaults.config.sections.find((s) => s.key === "gallery")?.enabled ?? true,
       sectionMapEnabled: defaults.config.sections.find((s) => s.key === "map")?.enabled ?? true,
       sectionRsvpEnabled: defaults.config.sections.find((s) => s.key === "rsvp")?.enabled ?? true,
@@ -391,6 +417,16 @@ export function SiteFormPage() {
               detailsDateSubtitle: values.detailsDateSubtitle,
               detailsTimeSubtitle: values.detailsTimeSubtitle,
               detailsMapLinkText: values.detailsMapLinkText,
+              // Always concrete values: Firestore rejects `undefined`, and the
+              // section treats an empty list the same as absent.
+              orderOfDayTitle: values.orderOfDayTitle.trim(),
+              orderOfDayItems: values.orderOfDayItems
+                .map((item) => ({
+                  time: item.time.trim(),
+                  title: item.title.trim(),
+                  description: item.description.trim(),
+                }))
+                .filter((item) => item.time.length > 0 || item.title.length > 0),
               galleryTitle: values.galleryTitle,
               mapTitle: values.mapTitle,
               rsvpTitle: values.rsvpTitle,
@@ -432,6 +468,7 @@ export function SiteFormPage() {
               sections: [
                 { key: "hero", enabled: values.sectionHeroEnabled },
                 { key: "details", enabled: values.sectionDetailsEnabled },
+                { key: "orderOfDay", enabled: values.sectionOrderOfDayEnabled },
                 { key: "gallery", enabled: values.sectionGalleryEnabled },
                 { key: "map", enabled: values.sectionMapEnabled },
                 {
@@ -444,7 +481,9 @@ export function SiteFormPage() {
             assets: {
               ...baseAssets,
               mapEmbedSrc: values.mapEmbedSrc,
-              eventLogoUrl: values.eventLogoUrl.trim() || undefined,
+              // Always a string: Firestore rejects `undefined` field values,
+              // and consumers treat "" the same as absent.
+              eventLogoUrl: values.eventLogoUrl.trim(),
               galleryImages: values.galleryImages
                 .map((image) => image.url.trim())
                 .filter((image) => image.length > 0),
@@ -810,6 +849,70 @@ export function SiteFormPage() {
           />
         </div>
         <div className="space-y-1">
+          <label className="block text-sm font-medium text-text/80" htmlFor="order-of-day-title-input">
+            Order of the Day title
+          </label>
+          <input
+            id="order-of-day-title-input"
+            {...register("orderOfDayTitle")}
+            placeholder="Order of the Day"
+            className="w-full px-4 py-3 rounded-xl border border-secondary/20 bg-background"
+          />
+        </div>
+
+        <div className="space-y-2 md:col-span-2">
+          <div className="flex items-center justify-between gap-3">
+            <label className="block text-sm font-medium text-text/80">Order of the Day schedule</label>
+            <button
+              type="button"
+              onClick={() => appendOrderOfDayItem({ time: "", title: "", description: "" })}
+              className="px-3 py-2 rounded-xl border border-secondary/30 text-sm hover:text-secondary"
+            >
+              Add entry
+            </button>
+          </div>
+          <p className="text-xs text-text/70">
+            {orderOfDaySectionEnabled
+              ? "Shown in this order. The section is hidden on the invite while this list is empty."
+              : "The Order of the Day section is currently disabled in Configuration below."}
+          </p>
+          {orderOfDayFields.length === 0 ? (
+            <p className="text-sm text-text/70">No schedule entries yet.</p>
+          ) : null}
+          <div className="space-y-2">
+            {orderOfDayFields.map((field, index) => (
+              <div key={field.id} className="flex flex-col md:flex-row md:items-center gap-2">
+                <input
+                  {...register(`orderOfDayItems.${index}.time` as const)}
+                  type="text"
+                  placeholder="4:30 PM"
+                  className="md:w-40 px-4 py-3 rounded-xl border border-secondary/20 bg-background"
+                />
+                <input
+                  {...register(`orderOfDayItems.${index}.title` as const)}
+                  type="text"
+                  placeholder="Ceremony"
+                  className="md:w-56 px-4 py-3 rounded-xl border border-secondary/20 bg-background"
+                />
+                <input
+                  {...register(`orderOfDayItems.${index}.description` as const)}
+                  type="text"
+                  placeholder="Vows beneath the pines"
+                  className="flex-1 px-4 py-3 rounded-xl border border-secondary/20 bg-background"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeOrderOfDayItem(index)}
+                  className="px-3 py-2 rounded-xl border border-secondary/20 text-sm hover:text-red-600"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-1">
           <label className="block text-sm font-medium text-text/80" htmlFor="gallery-title-input">
             Gallery title
           </label>
@@ -1023,6 +1126,10 @@ export function SiteFormPage() {
           <label className="flex items-center gap-3 px-4 py-3 rounded-xl border border-secondary/20 bg-background">
             <input type="checkbox" {...register("sectionDetailsEnabled")} className="h-4 w-4" />
             <span className="text-sm text-foreground">Enable Details section</span>
+          </label>
+          <label className="flex items-center gap-3 px-4 py-3 rounded-xl border border-secondary/20 bg-background">
+            <input type="checkbox" {...register("sectionOrderOfDayEnabled")} className="h-4 w-4" />
+            <span className="text-sm text-foreground">Enable Order of the Day section</span>
           </label>
           <label className="flex items-center gap-3 px-4 py-3 rounded-xl border border-secondary/20 bg-background">
             <input type="checkbox" {...register("sectionGalleryEnabled")} className="h-4 w-4" />

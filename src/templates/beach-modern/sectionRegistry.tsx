@@ -42,9 +42,8 @@ const RsvpSectionAdapter = ({ context }: SectionComponentProps) => (
   />
 );
 
-export const sectionRegistry: Record<
-  SectionKey,
-  ComponentType<SectionComponentProps>
+export const sectionRegistry: Partial<
+  Record<SectionKey, ComponentType<SectionComponentProps>>
 > = {
   hero: BeachHeroAdapter,
   details: BeachDetailsAdapter,

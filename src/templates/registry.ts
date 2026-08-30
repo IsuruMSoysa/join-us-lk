@@ -32,6 +32,22 @@ export const templateRegistry: Record<string, TemplateDefinition> = {
     sectionKeys: ["hero", "details", "gallery", "map", "rsvp"],
     componentPath: "union-awards",
   },
+  evergreen: {
+    id: "evergreen",
+    name: "Evergreen",
+    description:
+      "Misty pine woodland wedding invitation in deep forest green and white",
+    sectionKeys: ["hero", "details", "gallery", "map", "rsvp"],
+    componentPath: "evergreen",
+  },
+  "emerald-tulip": {
+    id: "emerald-tulip",
+    name: "Emerald Tulip",
+    description:
+      "Dark emerald wedding invitation with tulip motifs and an optional order of the day",
+    sectionKeys: ["hero", "details", "orderOfDay", "gallery", "map", "rsvp"],
+    componentPath: "emerald-tulip",
+  },
 };
 
 export const templateComponents: Record<string, ReturnType<typeof lazy>> = {
@@ -39,4 +55,6 @@ export const templateComponents: Record<string, ReturnType<typeof lazy>> = {
   "beach-modern": lazy(() => import("./beach-modern")),
   "rise-beyond": lazy(() => import("./rise-beyond/index")),
   "union-awards": lazy(() => import("./union-awards/index")),
+  evergreen: lazy(() => import("./evergreen/index")),
+  "emerald-tulip": lazy(() => import("./emerald-tulip/index")),
 };

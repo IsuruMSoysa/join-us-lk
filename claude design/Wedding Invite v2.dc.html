@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#050f0a; }
+  a { color:#5fe3a5; text-decoration:none; }
+  a:hover { color:#c8fbe1; }
+  input, button { font-family:'Jost',system-ui,sans-serif; }
+  @keyframes drift { 0%,100% { transform:translate3d(0,0,0) scale(1); } 33% { transform:translate3d(6vw,-4vh,0) scale(1.15); } 66% { transform:translate3d(-5vw,3vh,0) scale(.92); } }
+  @keyframes shimmer { 0% { background-position:0% 50%; } 100% { background-position:200% 50%; } }
+  @keyframes sway { 0%,100% { transform:rotate(-2deg); } 50% { transform:rotate(2deg); } }
+  @keyframes glow { 0%,100% { opacity:.35; } 50% { opacity:.9; } }
+  @keyframes petal { 0% { transform:translate3d(0,-12vh,0) rotate(0deg); opacity:0; } 10% { opacity:.85; } 90% { opacity:.5; } 100% { transform:translate3d(14vw,112vh,0) rotate(420deg); opacity:0; } }
+  @keyframes rise { from { opacity:0; transform:translateY(34px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes wipe { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+  @keyframes pulse { 0%,100% { text-shadow:0 0 22px rgba(95,227,165,.25); } 50% { text-shadow:0 0 40px rgba(95,227,165,.6); } }
+</style>
+</helmet>
+<div style="position:relative;font-family:'Jost',system-ui,sans-serif;color:#dfeee5;background:#050f0a;overflow-x:clip">
+
+  <div style="position:fixed;inset:0;pointer-events:none;z-index:0">
+    <div style="position:absolute;top:-14vh;left:-6vw;width:62vw;height:62vw;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(31,169,113,.34),rgba(31,169,113,0) 68%);filter:blur(24px);animation:drift 26s ease-in-out infinite"></div>
+    <div style="position:absolute;bottom:-24vh;right:-12vw;width:70vw;height:70vw;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(120,222,178,.22),rgba(120,222,178,0) 66%);filter:blur(30px);animation:drift 34s ease-in-out infinite reverse"></div>
+    <div style="position:absolute;top:30vh;left:38vw;width:44vw;height:44vw;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(214,232,222,.12),rgba(214,232,222,0) 60%);filter:blur(26px);animation:drift 44s ease-in-out infinite"></div>
+    <div style="position:absolute;left:8vw;top:0;width:9px;height:9px;border-radius:60% 40% 55% 45% / 70% 70% 30% 30%;background:#8ff0c0;opacity:.6;animation:petal 17s linear infinite"></div>
+    <div style="position:absolute;left:26vw;top:0;width:7px;height:12px;border-radius:60% 40% 55% 45% / 70% 70% 30% 30%;background:#d9f5e7;opacity:.5;animation:petal 23s linear -6s infinite"></div>
+    <div style="position:absolute;left:47vw;top:0;width:6px;height:9px;border-radius:60% 40% 55% 45% / 70% 70% 30% 30%;background:#5fe3a5;opacity:.5;animation:petal 20s linear -12s infinite"></div>
+    <div style="position:absolute;left:68vw;top:0;width:10px;height:14px;border-radius:60% 40% 55% 45% / 70% 70% 30% 30%;background:#b9ead2;opacity:.45;animation:petal 27s linear -3s infinite"></div>
+    <div style="position:absolute;left:86vw;top:0;width:7px;height:10px;border-radius:60% 40% 55% 45% / 70% 70% 30% 30%;background:#8ff0c0;opacity:.55;animation:petal 21s linear -16s infinite"></div>
+  </div>
+
+  <div style="position:relative;z-index:1">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1240px;margin:0 auto;padding:32px 6vw 0;animation:rise .9s ease-out both">
+    <div style="font:500 11px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#7fbfa0">14 · 11 · 2026</div>
+    <div style="font:400 11px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#7fbfa0">The Pine Grove · Nuwara Eliya</div>
+  </div>
+
+  <section style="position:relative;max-width:1240px;margin:0 auto;padding:min(12vh,110px) 6vw min(9vh,80px);text-align:center">
+    <p style="margin:0 0 22px;font:400 11px/1 'Jost',sans-serif;letter-spacing:.4em;text-transform:uppercase;color:#7fbfa0;animation:rise 1s ease-out .1s both">Together with their families · we invite you to our wedding</p>
+
+    <h1 style="margin:0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:clamp(58px,12vw,168px);line-height:.86;letter-spacing:-.02em;background:linear-gradient(100deg,#eaf7ef 0%,#5fe3a5 26%,#eaf7ef 52%,#5fe3a5 78%,#eaf7ef 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 9s linear infinite,rise 1.1s ease-out .18s both">Amaya</h1>
+
+    <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin:10px 0 4px;animation:rise 1.1s ease-out .3s both">
+      <span style="width:min(18vw,140px);height:1px;background:linear-gradient(90deg,rgba(95,227,165,0),rgba(95,227,165,.7));transform-origin:right;animation:wipe 1.3s ease-out .5s both"></span>
+      <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(30px,5vw,60px);color:#8ff0c0;animation:pulse 5s ease-in-out infinite">and</span>
+      <span style="width:min(18vw,140px);height:1px;background:linear-gradient(90deg,rgba(95,227,165,.7),rgba(95,227,165,0));transform-origin:left;animation:wipe 1.3s ease-out .5s both"></span>
+    </div>
+
+    <h1 style="margin:0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:clamp(58px,12vw,168px);line-height:.86;letter-spacing:-.02em;background:linear-gradient(100deg,#eaf7ef 0%,#5fe3a5 26%,#eaf7ef 52%,#5fe3a5 78%,#eaf7ef 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 9s linear infinite reverse,rise 1.1s ease-out .38s both">Ruwan</h1>
+
+    <p style="margin:36px auto 0;max-width:40ch;font:300 clamp(16px,1.5vw,19px)/1.75 'Jost',sans-serif;color:#a9c9b8;text-wrap:pretty;animation:rise 1.1s ease-out .5s both">Two families, a room full of tulips, and one <em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.28em;color:#8ff0c0">I do</em> we'd love you to witness.</p>
+
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:38px 0 0;animation:rise 1.1s ease-out .6s both">
+      <a href="#rsvp" style="display:inline-flex;align-items:center;gap:10px;padding:16px 34px;border-radius:999px;background:linear-gradient(120deg,#1fa971,#5fe3a5);color:#04140d;font:500 12px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;box-shadow:0 12px 40px rgba(31,169,113,.4);transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-3px);box-shadow:0 18px 54px rgba(95,227,165,.55)">Say you'll come <span style="font-size:15px">→</span></a>
+      <a href="#day" style="display:inline-flex;align-items:center;padding:16px 34px;border-radius:999px;border:1px solid rgba(143,240,192,.35);color:#dfeee5;background:rgba(255,255,255,.03);font:400 12px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;transition:border-color .25s,background .25s" style-hover="border-color:#8ff0c0;background:rgba(143,240,192,.1)">The details</a>
+    </div>
+
+    <div style="display:flex;align-items:flex-end;justify-content:center;gap:min(4vw,40px);margin:min(9vh,72px) 0 0;filter:drop-shadow(0 0 26px rgba(31,169,113,.45))">
+      <div style="position:relative;width:52px;height:136px;transform-origin:50% 100%;animation:sway 7s ease-in-out infinite,rise 1.2s ease-out .7s both">
+        <div style="position:absolute;left:25px;bottom:0;width:2px;height:92px;background:linear-gradient(#3c8f68,#1a4a33)"></div>
+        <div style="position:absolute;left:26px;bottom:24px;width:32px;height:11px;background:#2c7a56;border-radius:0 100% 0 100%"></div>
+        <div style="position:absolute;left:12px;bottom:84px;width:28px;height:46px">
+          <div style="position:absolute;left:0;bottom:0;width:15px;height:39px;background:#1fa971;border-radius:60% 40% 45% 55% / 70% 70% 30% 30%;transform:rotate(-11deg)"></div>
+          <div style="position:absolute;right:0;bottom:0;width:15px;height:39px;background:#1fa971;border-radius:40% 60% 55% 45% / 70% 70% 30% 30%;transform:rotate(11deg)"></div>
+          <div style="position:absolute;left:6px;bottom:0;width:16px;height:46px;background:#5fe3a5;border-radius:50% 50% 46% 46% / 66% 66% 34% 34%"></div>
+        </div>
+      </div>
+      <div style="position:relative;width:66px;height:186px;transform-origin:50% 100%;animation:sway 9.5s ease-in-out infinite,rise 1.2s ease-out .78s both">
+        <div style="position:absolute;left:32px;bottom:0;width:3px;height:128px;background:linear-gradient(#3c8f68,#16402d)"></div>
+        <div style="position:absolute;left:33px;bottom:36px;width:42px;height:14px;background:#2c7a56;border-radius:0 100% 0 100%;transform:rotate(-5deg)"></div>
+        <div style="position:absolute;right:33px;bottom:62px;width:40px;height:14px;background:#38916a;border-radius:100% 0 100% 0;transform:rotate(5deg)"></div>
+        <div style="position:absolute;left:15px;bottom:120px;width:36px;height:60px">
+          <div style="position:absolute;left:0;bottom:0;width:19px;height:51px;background:#1a8a5c;border-radius:60% 40% 45% 55% / 70% 70% 30% 30%;transform:rotate(-10deg)"></div>
+          <div style="position:absolute;right:0;bottom:0;width:19px;height:51px;background:#1a8a5c;border-radius:40% 60% 55% 45% / 70% 70% 30% 30%;transform:rotate(10deg)"></div>
+          <div style="position:absolute;left:8px;bottom:0;width:20px;height:60px;background:#5fe3a5;border-radius:50% 50% 46% 46% / 66% 66% 34% 34%"></div>
+        </div>
+      </div>
+      <div style="position:relative;width:46px;height:112px;transform-origin:50% 100%;animation:sway 8.4s ease-in-out infinite,rise 1.2s ease-out .86s both">
+        <div style="position:absolute;left:22px;bottom:0;width:2px;height:76px;background:linear-gradient(#33735a,#143526)"></div>
+        <div style="position:absolute;right:23px;bottom:18px;width:26px;height:10px;background:#276b4d;border-radius:100% 0 100% 0"></div>
+        <div style="position:absolute;left:10px;bottom:68px;width:26px;height:40px">
+          <div style="position:absolute;left:0;bottom:0;width:14px;height:34px;background:#177650;border-radius:60% 40% 45% 55% / 70% 70% 30% 30%;transform:rotate(-12deg)"></div>
+          <div style="position:absolute;right:0;bottom:0;width:14px;height:34px;background:#177650;border-radius:40% 60% 55% 45% / 70% 70% 30% 30%;transform:rotate(12deg)"></div>
+          <div style="position:absolute;left:5px;bottom:0;width:15px;height:40px;background:#3ec98d;border-radius:50% 50% 46% 46% / 66% 66% 34% 34%"></div>
+        </div>
+      </div>
+      <div style="position:relative;width:58px;height:158px;transform-origin:50% 100%;animation:sway 11s ease-in-out infinite,rise 1.2s ease-out .94s both">
+        <div style="position:absolute;left:28px;bottom:0;width:2px;height:110px;background:linear-gradient(#3c8f68,#16402d)"></div>
+        <div style="position:absolute;left:29px;bottom:30px;width:36px;height:12px;background:#2c7a56;border-radius:0 100% 0 100%;transform:rotate(-4deg)"></div>
+        <div style="position:absolute;left:13px;bottom:102px;width:32px;height:52px">
+          <div style="position:absolute;left:0;bottom:0;width:17px;height:45px;background:#1fa971;border-radius:60% 40% 45% 55% / 70% 70% 30% 30%;transform:rotate(-10deg)"></div>
+          <div style="position:absolute;right:0;bottom:0;width:17px;height:45px;background:#1fa971;border-radius:40% 60% 55% 45% / 70% 70% 30% 30%;transform:rotate(10deg)"></div>
+          <div style="position:absolute;left:7px;bottom:0;width:18px;height:52px;background:#8ff0c0;border-radius:50% 50% 46% 46% / 66% 66% 34% 34%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ showCountdown }}" hint-placeholder-val="{{ true }}">
+  <section style="max-width:1240px;margin:0 auto;padding:0 6vw">
+    <div style="border-radius:26px;border:1px solid rgba(143,240,192,.16);background:linear-gradient(140deg,rgba(31,169,113,.16),rgba(5,15,10,.5));backdrop-filter:blur(10px);padding:clamp(30px,4vw,52px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:36px">
+      <div>
+        <p style="margin:0 0 10px;font:400 11px/1 'Jost',sans-serif;letter-spacing:.34em;text-transform:uppercase;color:#7fbfa0">Counting down to the aisle</p>
+        <p style="margin:0;max-width:24ch;font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(26px,3.4vw,42px);line-height:1.15;color:#eaf7ef">until we say the two best words we know.</p>
+      </div>
+      <div style="display:flex;gap:min(3vw,30px)">
+        <div style="min-width:80px;text-align:center;border-radius:18px;border:1px solid rgba(143,240,192,.14);background:rgba(255,255,255,.03);padding:18px 12px 14px">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5.4vw,62px);line-height:1;color:#eaf7ef">{{ days }}</div>
+          <div style="margin-top:8px;font:400 10px/1 'Jost',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:#7fbfa0">Days</div>
+        </div>
+        <div style="min-width:80px;text-align:center;border-radius:18px;border:1px solid rgba(143,240,192,.14);background:rgba(255,255,255,.03);padding:18px 12px 14px">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5.4vw,62px);line-height:1;color:#eaf7ef">{{ hours }}</div>
+          <div style="margin-top:8px;font:400 10px/1 'Jost',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:#7fbfa0">Hours</div>
+        </div>
+        <div style="min-width:80px;text-align:center;border-radius:18px;border:1px solid rgba(143,240,192,.14);background:rgba(255,255,255,.03);padding:18px 12px 14px">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5.4vw,62px);line-height:1;color:#eaf7ef">{{ minutes }}</div>
+          <div style="margin-top:8px;font:400 10px/1 'Jost',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:#7fbfa0">Minutes</div>
+        </div>
+        <div style="min-width:80px;text-align:center;border-radius:18px;border:1px solid rgba(143,240,192,.22);background:rgba(31,169,113,.14);padding:18px 12px 14px">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5.4vw,62px);line-height:1;color:#8ff0c0;animation:glow 2s ease-in-out infinite">{{ seconds }}</div>
+          <div style="margin-top:8px;font:400 10px/1 'Jost',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:#7fbfa0">Seconds</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <section id="day" style="max-width:1240px;margin:0 auto;padding:min(13vh,120px) 6vw 0;scroll-margin-top:24px">
+    <div style="display:flex;align-items:baseline;gap:22px;margin-bottom:42px">
+      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,5.2vw,66px);line-height:1;color:#eaf7ef">Ceremony &amp; reception</h2>
+      <span style="flex:1;height:1px;background:linear-gradient(90deg,rgba(143,240,192,.5),rgba(143,240,192,0))"></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px">
+      <div style="border-radius:22px;border:1px solid rgba(143,240,192,.14);background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.015));backdrop-filter:blur(8px);padding:34px 30px 36px;transition:transform .3s,border-color .3s,box-shadow .3s" style-hover="transform:translateY(-6px);border-color:rgba(143,240,192,.45);box-shadow:0 22px 60px rgba(31,169,113,.22)">
+        <div style="font:400 10px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#7fbfa0">The day</div>
+        <div style="margin-top:16px;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:34px;line-height:1.12;color:#eaf7ef">Saturday,<br>November 14, 2026</div>
+        <div style="margin-top:14px;font:300 14px/1.65 'Jost',sans-serif;color:#a9c9b8">A Saturday — so nobody has an excuse to miss the first dance.</div>
+      </div>
+      <div style="border-radius:22px;border:1px solid rgba(143,240,192,.14);background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.015));backdrop-filter:blur(8px);padding:34px 30px 36px;transition:transform .3s,border-color .3s,box-shadow .3s" style-hover="transform:translateY(-6px);border-color:rgba(143,240,192,.45);box-shadow:0 22px 60px rgba(31,169,113,.22)">
+        <div style="font:400 10px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#7fbfa0">The hour</div>
+        <div style="margin-top:16px;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:34px;line-height:1.12;color:#eaf7ef">4:30 PM<br>until midnight-ish</div>
+        <div style="margin-top:14px;font:300 14px/1.65 'Jost',sans-serif;color:#a9c9b8">Vows first, dinner next, dancing until the band gives up.</div>
+      </div>
+      <div style="border-radius:22px;border:1px solid rgba(143,240,192,.4);background:linear-gradient(150deg,rgba(31,169,113,.34),rgba(31,169,113,.08));backdrop-filter:blur(8px);padding:34px 30px 36px;box-shadow:0 18px 60px rgba(31,169,113,.24);transition:transform .3s,box-shadow .3s" style-hover="transform:translateY(-6px);box-shadow:0 26px 70px rgba(95,227,165,.34)">
+        <div style="font:400 10px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#c8fbe1">The place</div>
+        <div style="margin-top:16px;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:34px;line-height:1.12;color:#fff">The Pine Grove,<br>Nuwara Eliya</div>
+        <div style="margin-top:14px;font:300 14px/1.65 'Jost',sans-serif;color:#d3f2e2">Ceremony and reception in one place. Garden formal — bring a shawl for the evening.</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:22px">
+      <a href="#rsvp" style="display:inline-flex;align-items:center;padding:14px 28px;border-radius:999px;border:1px solid rgba(143,240,192,.3);background:rgba(255,255,255,.03);font:400 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#dfeee5;transition:border-color .25s,background .25s" style-hover="border-color:#8ff0c0;background:rgba(143,240,192,.1)">Add to calendar</a>
+      <a href="#map" style="display:inline-flex;align-items:center;padding:14px 28px;border-radius:999px;border:1px solid rgba(143,240,192,.3);background:rgba(255,255,255,.03);font:400 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#dfeee5;transition:border-color .25s,background .25s" style-hover="border-color:#8ff0c0;background:rgba(143,240,192,.1)">Directions</a>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:min(10vh,86px) 6vw 0">
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:22px;margin-bottom:36px">
+      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(30px,4.4vw,54px);line-height:1;color:#eaf7ef">Order of the day</h2>
+      <span style="flex:1;min-width:50px;height:1px;background:linear-gradient(90deg,rgba(143,240,192,.5),rgba(143,240,192,0))"></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:rgba(143,240,192,.16);border:1px solid rgba(143,240,192,.16);border-radius:22px;overflow:hidden">
+      <div style="background:rgba(5,15,10,.55);padding:30px 26px;transition:background .3s" style-hover="background:rgba(31,169,113,.14)">
+        <div style="font:400 10px/1 'Jost',sans-serif;letter-spacing:.3em;color:#7fbfa0">4:30 PM</div>
+        <div style="margin-top:12px;font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.15;color:#eaf7ef">The ceremony</div>
+        <div style="margin-top:8px;font:300 13px/1.6 'Jost',sans-serif;color:#a9c9b8">Please be seated by 4:15 — the aisle waits for no one.</div>
+      </div>
+      <div style="background:rgba(5,15,10,.55);padding:30px 26px;transition:background .3s" style-hover="background:rgba(31,169,113,.14)">
+        <div style="font:400 10px/1 'Jost',sans-serif;letter-spacing:.3em;color:#7fbfa0">5:30 PM</div>
+        <div style="margin-top:12px;font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.15;color:#eaf7ef">Toasts &amp; photos</div>
+        <div style="margin-top:8px;font:300 13px/1.6 'Jost',sans-serif;color:#a9c9b8">Champagne, confetti and far too many group shots.</div>
+      </div>
+      <div style="background:rgba(5,15,10,.55);padding:30px 26px;transition:background .3s" style-hover="background:rgba(31,169,113,.14)">
+        <div style="font:400 10px/1 'Jost',sans-serif;letter-spacing:.3em;color:#7fbfa0">7:00 PM</div>
+        <div style="margin-top:12px;font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.15;color:#eaf7ef">Dinner</div>
+        <div style="margin-top:8px;font:300 13px/1.6 'Jost',sans-serif;color:#a9c9b8">Seated, generous, and worth saving room for.</div>
+      </div>
+      <div style="background:rgba(31,169,113,.16);padding:30px 26px;transition:background .3s" style-hover="background:rgba(31,169,113,.26)">
+        <div style="font:400 10px/1 'Jost',sans-serif;letter-spacing:.3em;color:#c8fbe1">9:00 PM</div>
+        <div style="margin-top:12px;font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.15;color:#fff">First dance, then yours</div>
+        <div style="margin-top:8px;font:300 13px/1.6 'Jost',sans-serif;color:#d3f2e2">Cake, candles and a dance floor that stays open late.</div>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ showGallery }}" hint-placeholder-val="{{ true }}">
+  <section style="max-width:1240px;margin:0 auto;padding:min(13vh,120px) 6vw 0">
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:22px;margin-bottom:42px">
+      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,5.2vw,66px);line-height:1;color:#eaf7ef">How we got here</h2>
+      <span style="flex:1;min-width:50px;height:1px;background:linear-gradient(90deg,rgba(143,240,192,.5),rgba(143,240,192,0))"></span>
+      <p style="margin:0;max-width:28ch;font:300 14px/1.7 'Jost',sans-serif;color:#a9c9b8">Seven years, one bouquet of tulips, and a very easy yes.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:18px;align-items:end">
+      <div style="aspect-ratio:3/4;border-radius:18px;border:1px solid rgba(143,240,192,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.055) 0 10px,rgba(255,255,255,.02) 10px 20px);display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;transition:transform .35s,border-color .35s" style-hover="transform:translateY(-8px) rotate(-1.2deg);border-color:rgba(143,240,192,.45)">
+        <span style="font:400 10px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#7fbfa0;text-transform:uppercase">the first photo, 2019</span>
+      </div>
+      <div style="aspect-ratio:3/4.6;border-radius:18px;border:1px solid rgba(143,240,192,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.055) 0 10px,rgba(255,255,255,.02) 10px 20px);display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;transition:transform .35s,border-color .35s" style-hover="transform:translateY(-8px) rotate(1.2deg);border-color:rgba(143,240,192,.45)">
+        <span style="font:400 10px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#7fbfa0;text-transform:uppercase">the engagement</span>
+      </div>
+      <div style="aspect-ratio:1/1;border-radius:18px;border:1px solid rgba(143,240,192,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.055) 0 10px,rgba(255,255,255,.02) 10px 20px);display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;transition:transform .35s,border-color .35s" style-hover="transform:translateY(-8px) rotate(-1deg);border-color:rgba(143,240,192,.45)">
+        <span style="font:400 10px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#7fbfa0;text-transform:uppercase">the first bouquet</span>
+      </div>
+      <div style="aspect-ratio:3/4;border-radius:18px;border:1px solid rgba(143,240,192,.4);background:linear-gradient(150deg,rgba(31,169,113,.3),rgba(5,15,10,.6));display:flex;flex-direction:column;justify-content:flex-end;padding:28px;box-shadow:0 18px 60px rgba(31,169,113,.2)">
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:27px;line-height:1.22;color:#f2fbf6">“Still the best decision either of us has ever made.”</div>
+        <div style="margin-top:14px;font:400 10px/1 'Jost',sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#8ff0c0">A &amp; R</div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <section id="map" style="max-width:1240px;margin:0 auto;padding:min(13vh,120px) 6vw 0;scroll-margin-top:24px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:36px;align-items:center">
+      <div>
+        <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,5vw,60px);line-height:1.04;color:#eaf7ef">Getting there</h2>
+        <p style="margin:20px 0 0;max-width:32ch;font:300 16px/1.75 'Jost',sans-serif;color:#a9c9b8;text-wrap:pretty">Ceremony and reception both take place at The Pine Grove. Parking is on site, and shuttles run from the town centre from 3:30 PM.</p>
+        <div style="margin-top:26px;display:flex;flex-direction:column;gap:6px">
+          <div style="font:500 13px/1.5 'Jost',sans-serif;letter-spacing:.04em;color:#8ff0c0">The Pine Grove, Nuwara Eliya</div>
+          <div style="font:300 13px/1.5 'Jost',sans-serif;color:#88a897">Moon Plains Road · parking on site · shuttles from 3:30 PM</div>
+        </div>
+      </div>
+      <div style="aspect-ratio:4/3;border-radius:22px;border:1px solid rgba(143,240,192,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 10px,rgba(255,255,255,.018) 10px 20px);display:flex;align-items:center;justify-content:center">
+        <span style="font:400 10px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#7fbfa0;text-transform:uppercase">venue map embed</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="rsvp" style="max-width:1240px;margin:0 auto;padding:min(13vh,120px) 6vw 0;scroll-margin-top:24px">
+    <div style="position:relative;overflow:hidden;border-radius:30px;border:1px solid rgba(143,240,192,.22);background:linear-gradient(150deg,rgba(31,169,113,.22),rgba(5,15,10,.65));backdrop-filter:blur(12px);box-shadow:0 30px 90px rgba(0,0,0,.5);padding:clamp(36px,5vw,76px)">
+      <div style="position:absolute;right:-52px;bottom:-24px;width:230px;height:320px;opacity:.14;z-index:0;pointer-events:none;transform-origin:50% 100%;animation:sway 13s ease-in-out infinite">
+        <div style="position:absolute;left:112px;bottom:0;width:4px;height:220px;background:#8ff0c0"></div>
+        <div style="position:absolute;left:114px;bottom:64px;width:100px;height:26px;background:#8ff0c0;border-radius:0 100% 0 100%"></div>
+        <div style="position:absolute;left:58px;bottom:198px;width:114px;height:118px">
+          <div style="position:absolute;left:0;bottom:0;width:58px;height:100px;background:#8ff0c0;border-radius:60% 40% 45% 55% / 70% 70% 30% 30%;transform:rotate(-10deg)"></div>
+          <div style="position:absolute;right:0;bottom:0;width:58px;height:100px;background:#8ff0c0;border-radius:40% 60% 55% 45% / 70% 70% 30% 30%;transform:rotate(10deg)"></div>
+          <div style="position:absolute;left:28px;bottom:0;width:58px;height:118px;background:#d9f5e7;border-radius:50% 50% 46% 46% / 66% 66% 34% 34%"></div>
+        </div>
+      </div>
+
+      <div style="position:relative;z-index:1;max-width:640px">
+        <p style="margin:0 0 12px;font:400 11px/1 'Jost',sans-serif;letter-spacing:.34em;text-transform:uppercase;color:#7fbfa0">Kindly reply by October 20</p>
+        <h2 style="margin:0 0 12px;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,6.4vw,78px);line-height:.98;color:#fff">Say you'll come</h2>
+        <p style="margin:0 0 36px;font:300 16px/1.7 'Jost',sans-serif;color:#a9c9b8;max-width:44ch">Two fields, ten seconds — and a seat with your name on it at our wedding.</p>
+
+        <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+          <div style="border-radius:20px;border:1px solid rgba(143,240,192,.35);background:rgba(143,240,192,.09);padding:32px 34px;animation:rise .7s ease-out both">
+            <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:34px;line-height:1.16;color:#fff">{{ sentHeadline }}</div>
+            <div style="margin-top:10px;font:300 15px/1.7 'Jost',sans-serif;color:#c8e5d6">{{ sentBody }}</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:28px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <label style="font:400 10px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#7fbfa0">Your name</label>
+            <input value="{{ name }}" onChange="{{ onName }}" placeholder="Kalum Aiya" style="width:100%;box-sizing:border-box;background:transparent;border:0;border-bottom:1px solid rgba(143,240,192,.3);padding:13px 2px;font-size:20px;font-weight:300;color:#fff;outline:none;transition:border-color .25s" style-focus="border-bottom-color:#8ff0c0" />
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <span style="font:400 10px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#7fbfa0">Will you be joining us?</span>
+            <div style="display:flex;flex-wrap:wrap;gap:12px">
+              <button onClick="{{ pickYes }}" style="{{ yesStyle }}">Joyfully, yes</button>
+              <button onClick="{{ pickNo }}" style="{{ noStyle }}">Sadly, no</button>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px">
+            <button onClick="{{ send }}" style="display:inline-flex;align-items:center;gap:10px;padding:17px 38px;border:0;border-radius:999px;background:linear-gradient(120deg,#1fa971,#8ff0c0);color:#04140d;font:500 12px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:0 14px 44px rgba(95,227,165,.35);transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-3px);box-shadow:0 20px 56px rgba(95,227,165,.55)">Send it <span style="font-size:15px">→</span></button>
+            <span style="font:300 13px/1.5 'Jost',sans-serif;color:#7fbfa0">{{ hint }}</span>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <footer style="max-width:1240px;margin:0 auto;padding:76px 6vw 64px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px">
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:27px;color:#8ff0c0">Amaya &amp; Ruwan · 14.11.2026</div>
+    <div style="font:400 10px/1 'Jost',sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#6da28a">Made with tulips · joinus.lk</div>
+  </footer>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCountdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showGallery&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { now: Date.now(), name: "", attending: null, sent: false };
+
+  componentDidMount() { this.t = setInterval(() => this.setState({ now: Date.now() }), 1000); }
+  componentWillUnmount() { clearInterval(this.t); }
+
+  pad(n) { return n < 10 ? "0" + n : String(n); }
+
+  btn(active) {
+    return "padding:15px 28px;border-radius:999px;cursor:pointer;white-space:nowrap;font:400 12px/1 'Jost',sans-serif;letter-spacing:.14em;transition:all .25s;" +
+      (active
+        ? "background:rgba(143,240,192,.18);color:#eaf7ef;border:1px solid #8ff0c0;box-shadow:0 0 30px rgba(95,227,165,.35);"
+        : "background:rgba(255,255,255,.03);color:#a9c9b8;border:1px solid rgba(143,240,192,.24);");
+  }
+
+  renderVals() {
+    const target = new Date("2026-11-14T16:30:00+05:30").getTime();
+    const s = Math.floor(Math.max(0, target - this.state.now) / 1000);
+    const no = this.state.attending === "no";
+    return {
+      days: this.pad(Math.floor(s / 86400)),
+      hours: this.pad(Math.floor(s / 3600) % 24),
+      minutes: this.pad(Math.floor(s / 60) % 60),
+      seconds: this.pad(s % 60),
+      showCountdown: this.props.showCountdown ?? true,
+      showGallery: this.props.showGallery ?? true,
+      name: this.state.name,
+      onName: (e) => this.setState({ name: e.target.value }),
+      pickYes: () => this.setState({ attending: "yes" }),
+      pickNo: () => this.setState({ attending: "no" }),
+      yesStyle: this.btn(this.state.attending === "yes"),
+      noStyle: this.btn(no),
+      send: () => { if (this.state.name.trim() && this.state.attending) this.setState({ sent: true }); },
+      hint: this.state.name.trim() && this.state.attending ? "" : "A name and an answer, please.",
+      sent: this.state.sent,
+      notSent: !this.state.sent,
+      sentHeadline: no ? "We'll miss you, " + this.state.name.trim() + "." : "You're on the list, " + this.state.name.trim() + " — a seat is yours.",
+      sentBody: no
+        ? "We'll save you a tulip and send photos from the day."
+        : "Directions, dress notes and a playlist you can complain about are on their way."
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -5,11 +5,13 @@ import { type ComponentType } from "react";
 type PageComposerProps = {
   config: TemplateConfig;
   context: InviteContext;
-  sectionRegistry: Record<
-    string,
-    ComponentType<{
-      context: InviteContext;
-    }>
+  sectionRegistry: Partial<
+    Record<
+      string,
+      ComponentType<{
+        context: InviteContext;
+      }>
+    >
   >;
 };
 
@@ -37,7 +39,11 @@ export function PageComposer({
         if (!section.enabled) return null;
         if (section.requiresValidInvite && !context.validInvite) return null;
 
+        // A template need not implement every SectionKey, and a stored site
+        // document can name a section its template does not carry.
         const SectionComponent = sectionRegistry[section.key];
+        if (!SectionComponent) return null;
+
         return <SectionComponent key={section.key} context={context} />;
       })}
     </>
