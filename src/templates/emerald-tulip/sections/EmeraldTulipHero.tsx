@@ -37,7 +37,7 @@ export function EmeraldTulipHero({
   return (
     <section className="relative pt-8">
       {/* 1. Top meta bar */}
-      <AnimatedSection delay={0}>
+      {/* <AnimatedSection delay={0}>
         <div className="et-label flex flex-wrap items-center justify-between gap-3 text-[11px] tracking-[0.3em]">
           <span className="font-medium">{metaDate}</span>
           <span>
@@ -45,7 +45,7 @@ export function EmeraldTulipHero({
             {content.venueAddress ? ` · ${content.venueAddress}` : ""}
           </span>
         </div>
-      </AnimatedSection>
+      </AnimatedSection> */}
 
       {/* 2. Hero */}
       <div className="pt-[min(12vh,110px)] pb-[min(9vh,80px)] text-center">
