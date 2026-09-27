@@ -3,7 +3,10 @@ import { FEATURES } from "../content";
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="scroll-mt-24 px-4 pb-16 md:px-16 md:pb-26">
+    <section
+      id="features"
+      className="scroll-mt-24 px-4 pt-14 pb-16 md:px-16 md:pt-20 md:pb-26"
+    >
       <div className="mx-auto max-w-[1152px]">
         <div className="mb-5 flex flex-col items-end justify-between gap-4 md:flex-row md:gap-10">
           <AnimatedSection>

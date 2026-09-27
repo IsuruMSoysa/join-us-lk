@@ -27,7 +27,7 @@ export function PortalUsersPage() {
   const { user } = useAuthUser();
   const [users, setUsers] = useState<PortalUser[]>([]);
   const [draftSites, setDraftSites] = useState<DraftSites>({});
-  const [availableSiteIds, setAvailableSiteIds] = useState<string[]>([]);
+  const [availableSites, setAvailableSites] = useState<{ id: string; label: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [saveErrorByUser, setSaveErrorByUser] = useState<Record<string, string>>({});
@@ -39,7 +39,9 @@ export function PortalUsersPage() {
       const [rows, sites] = await Promise.all([listPortalUsers(), getSites()]);
       const sorted = [...rows].sort((a, b) => Number(a.approved) - Number(b.approved));
       setUsers(sorted);
-      setAvailableSiteIds(sites.map((s) => s.id));
+      setAvailableSites(
+        sites.map((s) => ({ id: s.id, label: s.slug || s.id })),
+      );
       setDraftSites(
         Object.fromEntries(sorted.map((u) => [u.uid, (u.siteIds || []).join(",")])),
       );
@@ -113,7 +115,7 @@ export function PortalUsersPage() {
                 <TableRow>
                   <TableHead>User</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Allowed site IDs</TableHead>
+                  <TableHead>Allowed sites</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -137,23 +139,23 @@ export function PortalUsersPage() {
                         }
                         placeholder="siteId1,siteId2"
                       />
-                      {availableSiteIds.length > 0 ? (
+                      {availableSites.length > 0 ? (
                         <div className="flex flex-wrap gap-2">
-                          {availableSiteIds.map((siteId) => {
+                          {availableSites.map((site) => {
                             const selected = (draftSites[u.uid] || "")
                               .split(",")
                               .map((x) => x.trim())
                               .filter(Boolean)
-                              .includes(siteId);
+                              .includes(site.id);
                             return (
                               <Button
                                 type="button"
-                                key={`${u.uid}-${siteId}`}
+                                key={`${u.uid}-${site.id}`}
                                 size="sm"
                                 variant={selected ? "default" : "outline"}
-                                onClick={() => toggleSite(u.uid, siteId)}
+                                onClick={() => toggleSite(u.uid, site.id)}
                               >
-                                {siteId}
+                                {site.label}
                               </Button>
                             );
                           })}
@@ -173,7 +175,9 @@ export function PortalUsersPage() {
                               .split(",")
                               .map((x) => x.trim())
                               .filter(Boolean);
-                            const invalid = siteIds.filter((id) => !availableSiteIds.includes(id));
+                            const invalid = siteIds.filter(
+                              (id) => !availableSites.some((s) => s.id === id),
+                            );
                             if (invalid.length > 0) {
                               setSaveErrorByUser((prev) => ({
                                 ...prev,
