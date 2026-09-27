@@ -66,13 +66,13 @@ export function TemplatesSection() {
               Templates
             </h2>
           </AnimatedSection>
-          <div className="mb-3.5 flex gap-1.5 rounded-full bg-white/6 p-1.5">
+          <div className="mt-3 mb-3.5 flex gap-2 overflow-x-auto rounded-full bg-white/6 p-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {templates.map((t, i) => (
               <button
                 key={t.id}
                 type="button"
                 onClick={() => setActiveTemplate(i)}
-                className={`min-h-11 flex-1 rounded-full font-round text-[13px] font-semibold whitespace-nowrap transition-colors duration-200 ${
+                className={`min-h-11 shrink-0 whitespace-nowrap rounded-full px-5 font-round text-[13px] font-semibold transition-colors duration-200 ${
                   i === activeTemplate
                     ? "bg-primary text-[#0E1330]"
                     : "text-text/75"
