@@ -7,7 +7,7 @@ import {
   isInviteeSlugTaken,
   updateInvitee,
 } from "../../lib/firestore/invitees";
-import { getRsvps } from "../../lib/firestore/rsvps";
+import { deleteRsvp, getRsvps } from "../../lib/firestore/rsvps";
 import { getSiteById, getSiteBySlug } from "../../lib/firestore/sites";
 import { logoutAdmin, useAuthUser } from "../../lib/auth";
 import { getPortalUser } from "../../lib/firestore/portalUsers";
@@ -72,6 +72,8 @@ export function PortalDashboard() {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [inviteeToDelete, setInviteeToDelete] = useState<InviteeRow | null>(null);
+  const [rsvpToDelete, setRsvpToDelete] = useState<RsvpRow | null>(null);
+  const [isDeletingRsvp, setIsDeletingRsvp] = useState(false);
   const [addDisplayName, setAddDisplayName] = useState("");
   const [addSlug, setAddSlug] = useState("");
   const [editDisplayName, setEditDisplayName] = useState("");
@@ -324,6 +326,21 @@ export function PortalDashboard() {
     }
   };
 
+  const handleDeleteRsvp = async () => {
+    if (!resolvedSiteId || !rsvpToDelete) return;
+    setIsDeletingRsvp(true);
+    try {
+      await deleteRsvp(resolvedSiteId, rsvpToDelete.id);
+      await refreshSiteData();
+      setRsvpToDelete(null);
+      toast.success("Response deleted.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to delete response.");
+    } finally {
+      setIsDeletingRsvp(false);
+    }
+  };
+
   const handleBulkImport = async (file: File | null) => {
     if (!file || !resolvedSiteId) return;
     setIsImporting(true);
@@ -454,6 +471,7 @@ export function PortalDashboard() {
                       <TableHead>Name</TableHead>
                       <TableHead>Invitee Slug</TableHead>
                       <TableHead>Attendance</TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -463,11 +481,22 @@ export function PortalDashboard() {
                           <TableCell>{r.name}</TableCell>
                           <TableCell>{r.inviteeSlug}</TableCell>
                           <TableCell className="uppercase">{r.attendance}</TableCell>
+                          <TableCell>
+                            <div className="flex justify-end">
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => setRsvpToDelete(r)}
+                              >
+                                Delete
+                              </Button>
+                            </div>
+                          </TableCell>
                         </TableRow>
                       ))
                     ) : (
                       <TableRow>
-                        <TableCell className="text-text/70" colSpan={3}>
+                        <TableCell className="text-text/70" colSpan={4}>
                           No RSVP responses yet for this site.
                         </TableCell>
                       </TableRow>
@@ -659,6 +688,31 @@ export function PortalDashboard() {
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction disabled={isSaving} onClick={handleDeleteInvitee}>
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        <AlertDialog
+          open={Boolean(rsvpToDelete)}
+          onOpenChange={(open) => {
+            if (!open) setRsvpToDelete(null);
+          }}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete response?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently remove the RSVP response from{" "}
+                <strong>{rsvpToDelete?.name}</strong>.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setRsvpToDelete(null)}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction disabled={isDeletingRsvp} onClick={handleDeleteRsvp}>
                 Delete
               </AlertDialogAction>
             </AlertDialogFooter>

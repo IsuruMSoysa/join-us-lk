@@ -20,6 +20,7 @@ type FormValues = {
   secondName: string;
   dateTime: string;
   eventTime: string;
+  poruwaTime: string;
   venueName: string;
   venueAddress: string;
   rsvpByDate: string;
@@ -34,6 +35,8 @@ type FormValues = {
   detailsMapLinkText: string;
   orderOfDayTitle: string;
   orderOfDayItems: OrderOfDayItem[];
+  showCountdown: boolean;
+  fallingLeaves: boolean;
   galleryTitle: string;
   mapTitle: string;
   rsvpTitle: string;
@@ -111,6 +114,7 @@ export function SiteFormPage() {
       secondName: initialTemplateDefaults.content.names.second,
       dateTime: toDatetimeLocalValue(initialTemplateDefaults.content.eventDateTime),
       eventTime: initialTemplateDefaults.content.eventTime,
+      poruwaTime: initialTemplateDefaults.content.poruwaTime ?? "",
       venueName: initialTemplateDefaults.content.venueName,
       venueAddress: initialTemplateDefaults.content.venueAddress,
       rsvpByDate: initialTemplateDefaults.content.rsvpByDate,
@@ -125,6 +129,8 @@ export function SiteFormPage() {
       detailsMapLinkText: initialTemplateDefaults.content.detailsMapLinkText,
       orderOfDayTitle: initialTemplateDefaults.content.orderOfDayTitle ?? "",
       orderOfDayItems: initialTemplateDefaults.content.orderOfDayItems ?? [],
+      showCountdown: initialTemplateDefaults.content.showCountdown ?? true,
+      fallingLeaves: initialTemplateDefaults.content.fallingLeaves ?? true,
       galleryTitle: initialTemplateDefaults.content.galleryTitle,
       mapTitle: initialTemplateDefaults.content.mapTitle,
       rsvpTitle: initialTemplateDefaults.content.rsvpTitle,
@@ -230,6 +236,7 @@ export function SiteFormPage() {
         secondName: site.content.names.second,
         dateTime: toDatetimeLocalValue(site.content.eventDateTime),
         eventTime: site.content.eventTime,
+        poruwaTime: site.content.poruwaTime ?? "",
         venueName: site.content.venueName,
         venueAddress: site.content.venueAddress,
         rsvpByDate: site.content.rsvpByDate,
@@ -244,6 +251,8 @@ export function SiteFormPage() {
         detailsMapLinkText: site.content.detailsMapLinkText,
         orderOfDayTitle: site.content.orderOfDayTitle ?? "",
         orderOfDayItems: site.content.orderOfDayItems ?? [],
+        showCountdown: site.content.showCountdown ?? true,
+        fallingLeaves: site.content.fallingLeaves ?? true,
         galleryTitle: site.content.galleryTitle,
         mapTitle: site.content.mapTitle,
         rsvpTitle: site.content.rsvpTitle,
@@ -299,6 +308,7 @@ export function SiteFormPage() {
       secondName: defaults.content.names.second,
       dateTime: toDatetimeLocalValue(defaults.content.eventDateTime),
       eventTime: defaults.content.eventTime,
+      poruwaTime: defaults.content.poruwaTime ?? "",
       venueName: defaults.content.venueName,
       venueAddress: defaults.content.venueAddress,
       rsvpByDate: defaults.content.rsvpByDate,
@@ -313,6 +323,8 @@ export function SiteFormPage() {
       detailsMapLinkText: defaults.content.detailsMapLinkText,
       orderOfDayTitle: defaults.content.orderOfDayTitle ?? "",
       orderOfDayItems: defaults.content.orderOfDayItems ?? [],
+      showCountdown: defaults.content.showCountdown ?? true,
+      fallingLeaves: defaults.content.fallingLeaves ?? true,
       galleryTitle: defaults.content.galleryTitle,
       mapTitle: defaults.content.mapTitle,
       rsvpTitle: defaults.content.rsvpTitle,
@@ -405,6 +417,7 @@ export function SiteFormPage() {
               names: { first: values.firstName, second: values.secondName },
               eventDateTime: toStoredDatetimeValue(values.dateTime),
               eventTime: values.eventTime,
+              poruwaTime: values.poruwaTime.trim(),
               venueName: values.venueName,
               venueAddress: values.venueAddress,
               rsvpByDate: values.rsvpByDate,
@@ -425,8 +438,11 @@ export function SiteFormPage() {
                   time: item.time.trim(),
                   title: item.title.trim(),
                   description: item.description.trim(),
+                  highlight: Boolean(item.highlight),
                 }))
                 .filter((item) => item.time.length > 0 || item.title.length > 0),
+              showCountdown: values.showCountdown,
+              fallingLeaves: values.fallingLeaves,
               galleryTitle: values.galleryTitle,
               mapTitle: values.mapTitle,
               rsvpTitle: values.rsvpTitle,
@@ -655,6 +671,18 @@ export function SiteFormPage() {
             id="event-time-input"
             {...register("eventTime")}
             placeholder="Event time label (e.g. 09:30 AM)"
+            className="w-full px-4 py-3 rounded-xl border border-secondary/20 bg-background"
+          />
+        </div>
+
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-text/80" htmlFor="poruwa-time-input">
+            Poruwa/ceremony time (optional)
+          </label>
+          <input
+            id="poruwa-time-input"
+            {...register("poruwaTime")}
+            placeholder="09:59 (used by Olive Garden's countdown)"
             className="w-full px-4 py-3 rounded-xl border border-secondary/20 bg-background"
           />
         </div>
@@ -900,6 +928,14 @@ export function SiteFormPage() {
                   placeholder="Vows beneath the pines"
                   className="flex-1 px-4 py-3 rounded-xl border border-secondary/20 bg-background"
                 />
+                <label className="flex items-center gap-2 px-2 text-sm text-foreground whitespace-nowrap">
+                  <input
+                    type="checkbox"
+                    {...register(`orderOfDayItems.${index}.highlight` as const)}
+                    className="h-4 w-4"
+                  />
+                  Highlight
+                </label>
                 <button
                   type="button"
                   onClick={() => removeOrderOfDayItem(index)}
@@ -1146,6 +1182,14 @@ export function SiteFormPage() {
           <label className="flex items-center gap-3 px-4 py-3 rounded-xl border border-secondary/20 bg-background">
             <input type="checkbox" {...register("sectionRsvpRequiresValidInvite")} className="h-4 w-4" />
             <span className="text-sm text-foreground">RSVP requires valid invitee link</span>
+          </label>
+          <label className="flex items-center gap-3 px-4 py-3 rounded-xl border border-secondary/20 bg-background">
+            <input type="checkbox" {...register("showCountdown")} className="h-4 w-4" />
+            <span className="text-sm text-foreground">Show countdown (Olive Garden)</span>
+          </label>
+          <label className="flex items-center gap-3 px-4 py-3 rounded-xl border border-secondary/20 bg-background">
+            <input type="checkbox" {...register("fallingLeaves")} className="h-4 w-4" />
+            <span className="text-sm text-foreground">Falling leaves animation (Olive Garden)</span>
           </label>
         </div>
 

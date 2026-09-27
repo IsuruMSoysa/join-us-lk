@@ -30,7 +30,8 @@ const templateDefaults: Record<string, SiteTemplateDefaults> = {
       rsvpByDate: "May 01, 2026",
       tagline: "A Celestial Dance of Two Souls",
       heroGreeting: "In the quiet hum of the universe, our paths converged.",
-      heroInvite: "Join us as we weave our futures together under the canopy of the stars.",
+      heroInvite:
+        "Join us as we weave our futures together under the canopy of the stars.",
       quoteText:
         "I love you without knowing how, or when, or from where. I love you straightforwardly, without complexities or pride; so I love you because I know no other way.",
       quoteRef: "— Pablo Neruda, Sonnet XVII",
@@ -43,7 +44,8 @@ const templateDefaults: Record<string, SiteTemplateDefaults> = {
       rsvpTitle: "Confirm Your Presence",
       rsvpDeadlineText: "Kindly let us know by",
       rsvpSuccessAttendingTitle: "You're on the list!",
-      rsvpSuccessAttendingBody: "We can't wait to celebrate this cosmic union with you.",
+      rsvpSuccessAttendingBody:
+        "We can't wait to celebrate this cosmic union with you.",
       rsvpSuccessDeclinedTitle: "We'll miss you!",
       rsvpSuccessDeclinedBody:
         "Thank you for letting us know. We're sorry you can't join us, but we hope our paths cross again soon.",
@@ -124,8 +126,7 @@ const templateDefaults: Record<string, SiteTemplateDefaults> = {
       rsvpTitle: "Confirm attendance",
       rsvpDeadlineText: "RSVP by",
       rsvpSuccessAttendingTitle: "You're confirmed",
-      rsvpSuccessAttendingBody:
-        "We received your RSVP. See you at the summit.",
+      rsvpSuccessAttendingBody: "We received your RSVP. See you at the summit.",
       rsvpSuccessDeclinedTitle: "Response recorded",
       rsvpSuccessDeclinedBody:
         "Thank you for letting us know. We hope to connect on a future initiative.",
@@ -155,11 +156,7 @@ const templateDefaults: Record<string, SiteTemplateDefaults> = {
       heroRingImageUrl: "",
       mapEmbedSrc:
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.014974731634!2d80.0262051!3d7.239130100000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2e3e1821395f1%3A0xeb2264b713646f4b!2sHotel%20Mandakini!5e0!3m2!1sen!2slk!4v1773298620394!5m2!1sen!2slk",
-      galleryImages: [
-        "/images/1.webp",
-        "/images/2.webp",
-        "/images/3.webp",
-      ],
+      galleryImages: ["/images/1.webp", "/images/2.webp", "/images/3.webp"],
     },
   },
   "union-awards": {
@@ -189,7 +186,8 @@ const templateDefaults: Record<string, SiteTemplateDefaults> = {
       tagline: "Legacy to infinity — a night beyond time.",
       heroGreeting:
         "You are cordially invited to celebrate excellence, resilience, and the people who shape our tomorrow.",
-      heroInvite: "Confirm your presence for an evening of prestige and recognition.",
+      heroInvite:
+        "Confirm your presence for an evening of prestige and recognition.",
       quoteText:
         "The future belongs to those who believe in the beauty of their dreams.",
       quoteRef: "— Eleanor Roosevelt",
@@ -266,8 +264,7 @@ const templateDefaults: Record<string, SiteTemplateDefaults> = {
       heroGreeting: "Together with their families",
       heroInvite:
         "Join us beneath the pines as we say our vows, and stay for an evening of dinner, dancing and firelight.",
-      quoteText:
-        "And into the forest I go, to lose my mind and find my soul.",
+      quoteText: "And into the forest I go, to lose my mind and find my soul.",
       quoteRef: "— John Muir",
       detailsTitle: "The celebration",
       detailsDateSubtitle: "The day",
@@ -395,6 +392,112 @@ const templateDefaults: Record<string, SiteTemplateDefaults> = {
       galleryImages: ["/images/1.webp", "/images/2.webp", "/images/3.webp"],
     },
   },
+  "olive-garden": {
+    config: {
+      metadata: {
+        title: `${brand.displayName} — Nupa & Imal`,
+        invalidInviteTitle: "Invalid Invite",
+      },
+      features: {
+        showInvalidInvitePage: true,
+      },
+      sections: [
+        { key: "hero", enabled: true },
+        // "How the day unfolds" — core to this design, unlike emerald-tulip's
+        // optional order of day, so it defaults on.
+        { key: "orderOfDay", enabled: true },
+        // Gallery is optional and off until the couple uploads photos.
+        { key: "gallery", enabled: false },
+        { key: "map", enabled: true },
+        { key: "rsvp", enabled: true, requiresValidInvite: true },
+      ],
+    },
+    content: {
+      names: { first: "Nupa", second: "Imal" },
+      // Doors open 9.00 AM; the countdown targets poruwaTime below instead.
+      eventDateTime: "2026-11-20T09:00:00",
+      eventTime: "9.00 AM – 3.30 PM",
+      poruwaTime: "09:59",
+      venueName: "Hotel Nildiya",
+      venueAddress: "17, 12 Medagoda Rd, Matara",
+      rsvpByDate: "November 05, 2026",
+      tagline:
+        "We're getting married — and it simply wouldn't feel complete without you there.",
+      heroGreeting: "You're invited",
+      // Paired with the countdown panel's fixed "Not that we're counting…" eyebrow.
+      heroInvite: "but here's how long until the Poruwa.",
+      quoteText: "Every road led quietly back to this one.",
+      quoteRef: "N & I",
+      detailsTitle: "The details",
+      detailsDateSubtitle: "The date",
+      detailsTimeSubtitle: "The time",
+      detailsMapLinkText: "Get directions",
+      orderOfDayTitle: "How the day unfolds",
+      orderOfDayItems: [
+        {
+          time: "9.00 AM",
+          title: "Welcome",
+          description:
+            "Arrive, find your people, and claim the good seats before the aunties do.",
+        },
+        {
+          time: "9.59 AM",
+          title: "The Poruwa ceremony",
+          description:
+            "The auspicious minute. Phones down, hearts up, tissues handy.",
+          highlight: true,
+        },
+        {
+          time: "Until 3.30 PM",
+          title: "Lunch & celebrations",
+          description:
+            "Good food, long hugs, and a dance floor that refuses to stay empty.",
+        },
+      ],
+      galleryTitle: "Little moments, big love",
+      mapTitle: "Where to find us",
+      rsvpTitle: "Will you celebrate with us?",
+      rsvpDeadlineText: "KINDLY REPLY BY",
+      // {name}/{venue}/{ordinalDay} are interpolated by OliveGardenRsvp at submit time.
+      rsvpSuccessAttendingTitle: "Yay, {name}! Your seat is saved.",
+      rsvpSuccessAttendingBody:
+        "See you at {venue} on the {ordinalDay}. Come hungry, leave happy.",
+      rsvpSuccessDeclinedTitle: "We'll miss you, {name}.",
+      rsvpSuccessDeclinedBody:
+        "Thank you for letting us know — we'll save you a slice of cake in spirit.",
+      invitePromptNameLabel: "Name",
+      invitePromptAttendanceLabel: "Attending",
+      invitePromptAttendYesLabel: "Wouldn't miss it",
+      invitePromptAttendNoLabel: "Sadly, can't make it",
+      submitRsvpLabel: "Send with love",
+      showCountdown: true,
+      fallingLeaves: true,
+    },
+    theme: {
+      colors: {
+        primary: "#4a5a22",
+        secondary: "#556b2f",
+        accent: "#85641b",
+        background: "#f6f1e4",
+        text: "#3d4224",
+        muted: "#6b7a3a",
+      },
+      fonts: {
+        heading: "Cormorant Garamond",
+        body: "Jost",
+        handwritten: "Cormorant Garamond",
+      },
+      showBackgroundTexture: false,
+    },
+    assets: {
+      heroRingImageUrl: "",
+      // Query-based embed, same no-API-key pattern emerald-tulip uses.
+      mapEmbedSrc:
+        "https://maps.google.com/maps?q=Hotel+Nildiya+Matara&z=15&output=embed",
+      // Off by default — the gallery section itself is also disabled above.
+      galleryImages: [],
+    },
+  },
 };
 
 function cloneDefaults(defaults: SiteTemplateDefaults): SiteTemplateDefaults {
@@ -425,9 +528,10 @@ function cloneDefaults(defaults: SiteTemplateDefaults): SiteTemplateDefaults {
   };
 }
 
-export function getSiteTemplateDefaults(templateId: string): SiteTemplateDefaults {
+export function getSiteTemplateDefaults(
+  templateId: string,
+): SiteTemplateDefaults {
   const selectedDefaults =
     templateDefaults[templateId] ?? templateDefaults[DEFAULT_TEMPLATE_ID];
   return cloneDefaults(selectedDefaults);
 }
-

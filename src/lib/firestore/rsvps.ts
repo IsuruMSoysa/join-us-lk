@@ -1,6 +1,8 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   orderBy,
   query,
@@ -26,4 +28,8 @@ export async function getRsvps(siteId: string) {
   );
   const snap = await getDocs(q);
   return snap.docs.map((d) => ({ id: d.id, ...(d.data() as RsvpDocument) }));
+}
+
+export async function deleteRsvp(siteId: string, rsvpId: string) {
+  await deleteDoc(doc(db, "sites", siteId, "rsvps", rsvpId));
 }

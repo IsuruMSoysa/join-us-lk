@@ -38,7 +38,8 @@ type CountdownVariant =
   | "corporate"
   | "awards"
   | "forest"
-  | "tulip";
+  | "tulip"
+  | "olive";
 
 type VariantStyles = {
   /** Extra margin/positioning on the outermost wrapper. */
@@ -130,6 +131,21 @@ const VARIANT_STYLES: Record<CountdownVariant, VariantStyles> = {
     // `cell`/`numeral`, and class order in the attribute does not decide that.
     lastCell: "border-[#8ff0c0]/[0.22]! bg-[#1fa971]/[0.14]!",
     lastNumeral: "et-glow text-[#8ff0c0]!",
+  },
+  olive: {
+    root: "mt-0 relative",
+    cell: "min-w-[72px] sm:min-w-20 rounded-2xl border border-[#c8cc9c]/20 bg-[#2f3517]/40 px-3 pt-[18px] pb-3.5 flex items-center justify-center",
+    numeral:
+      "font-olive-garden text-[clamp(28px,5vw,56px)] font-light leading-none tabular-nums text-[#f6f1e4]",
+    label:
+      "mt-2 font-olive-garden-label text-[10px] uppercase tracking-[0.26em] text-[#c8cc9c]",
+    todayWrapper:
+      "mx-auto max-w-lg rounded-2xl border border-[#d6b468]/30 bg-[#4a5a22]/40 px-8 py-6 backdrop-blur-md",
+    todayText:
+      "font-olive-garden text-center text-3xl sm:text-4xl md:text-5xl font-light tracking-wide text-[#f6f1e4]",
+    // Seconds cell breathes gold, per README §4.
+    lastCell: "border-[#d6b468]/40! bg-[#4a5a22]/60!",
+    lastNumeral: "og-breathe text-[#d6b468]!",
   },
 };
 

@@ -11,6 +11,8 @@ export type OrderOfDayItem = {
   time: string;
   title: string;
   description: string;
+  /** Marks the one row a theme should render as its emphasized/solid card. */
+  highlight?: boolean;
 };
 
 export type EventContent = {
@@ -40,6 +42,17 @@ export type EventContent = {
    */
   orderOfDayTitle?: string;
   orderOfDayItems?: OrderOfDayItem[];
+  /**
+   * Optional, Olive Garden-specific: the Poruwa/ceremony moment the countdown
+   * targets, distinct from the doors-open `eventTime`. Falls back to
+   * `eventTime` when absent, same tolerance-for-`undefined` reasoning as the
+   * `orderOfDay*` fields above.
+   */
+  poruwaTime?: string;
+  /** Countdown panel toggle. Defaults to `true` when absent. */
+  showCountdown?: boolean;
+  /** Falling-leaves ambient layer toggle. Defaults to `true` when absent. */
+  fallingLeaves?: boolean;
   galleryTitle: string;
   mapTitle: string;
   rsvpTitle: string;
