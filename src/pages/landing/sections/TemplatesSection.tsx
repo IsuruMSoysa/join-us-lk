@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatedSection } from "../../../components/shared/AnimatedSection";
 import { getPublishedFeaturedTemplates } from "../../../lib/firestore/featuredTemplates";
 import { type FeaturedTemplateWithId } from "../../../types/featuredTemplate";
@@ -26,6 +26,39 @@ function LivePreview({ href, className }: { href: string; className?: string }) 
 export function TemplatesSection() {
   const [templates, setTemplates] = useState<FeaturedTemplateWithId[] | null>(null);
   const [activeTemplate, setActiveTemplate] = useState(0);
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
+  const scrollSettleTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const scrollToIndex = (i: number) => {
+    const el = mobileScrollRef.current;
+    if (el) {
+      el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+    }
+    setActiveTemplate(i);
+  };
+
+  const handleMobileScroll = () => {
+    // Debounced so the pill highlight only updates once the swipe/scroll
+    // settles, rather than flickering through every card it passes.
+    if (scrollSettleTimeout.current) clearTimeout(scrollSettleTimeout.current);
+    scrollSettleTimeout.current = setTimeout(() => {
+      const el = mobileScrollRef.current;
+      if (!el || el.clientWidth === 0) return;
+      const rawIdx = Math.round(el.scrollLeft / el.clientWidth);
+      const idx = Math.max(0, Math.min((templates?.length ?? 1) - 1, rawIdx));
+      setActiveTemplate((prev) => (prev === idx ? prev : idx));
+    }, 100);
+  };
+
+  // Keep the mobile carousel's scroll position in sync with activeTemplate
+  // across viewport-width changes (e.g. resizing across the md breakpoint).
+  useEffect(() => {
+    const el = mobileScrollRef.current;
+    if (!el) return;
+    const resync = () => el.scrollTo({ left: activeTemplate * el.clientWidth });
+    window.addEventListener("resize", resync);
+    return () => window.removeEventListener("resize", resync);
+  }, [activeTemplate]);
 
   useEffect(() => {
     let cancelled = false;
@@ -71,7 +104,7 @@ export function TemplatesSection() {
               <button
                 key={t.id}
                 type="button"
-                onClick={() => setActiveTemplate(i)}
+                onClick={() => scrollToIndex(i)}
                 className={`inline-flex min-h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-5 font-round text-[13px] font-semibold transition-colors duration-200 ${
                   i === activeTemplate
                     ? "bg-primary text-[#0E1330]"
@@ -93,28 +126,48 @@ export function TemplatesSection() {
               </button>
             ))}
           </div>
-          <div className="overflow-hidden rounded-[22px] bg-panel-2 shadow-[0_0_0_1px_rgba(169,184,232,.25),0_0_50px_-12px_rgba(112,131,174,.8)]">
-            <a href={previewHref} target="_blank" rel="noreferrer">
-              <LivePreview href={previewHref} className="h-95" />
-            </a>
-            <div className="flex items-center justify-between gap-3 px-5 py-4.5">
-              <div>
-                <div className="font-display text-lg font-bold">
-                  {current.label}
+          <div
+            ref={mobileScrollRef}
+            onScroll={handleMobileScroll}
+            className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {templates.map((t, i) => {
+              const href = `/${t.siteSlug}/${t.sampleInviteeSlug}`;
+              // Only mount the live site for cards near the active one, so
+              // swiping through many templates doesn't load every live site
+              // at once.
+              const isNearActive = Math.abs(i - activeTemplate) <= 1;
+              return (
+                <div
+                  key={t.id}
+                  className="w-full shrink-0 snap-center overflow-hidden rounded-[22px] bg-panel-2 shadow-[0_0_0_1px_rgba(169,184,232,.25),0_0_50px_-12px_rgba(112,131,174,.8)]"
+                >
+                  <a href={href} target="_blank" rel="noreferrer">
+                    {isNearActive ? (
+                      <LivePreview href={href} className="h-95" />
+                    ) : (
+                      <div className="h-95 bg-[repeating-linear-gradient(135deg,#252D5E_0_12px,#20285A_12px_24px)]" />
+                    )}
+                  </a>
+                  <div className="flex items-center justify-between gap-3 px-5 py-4.5">
+                    <div>
+                      <div className="font-display text-lg font-bold">{t.label}</div>
+                      <p className="mt-1 font-round text-[13px] leading-normal font-light text-text/70">
+                        {t.blurb}
+                      </p>
+                    </div>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="min-h-11 shrink-0 rounded-full px-4 font-round text-[13px] font-semibold text-primary shadow-[inset_0_0_0_1px_var(--color-primary)] inline-flex items-center"
+                    >
+                      Preview
+                    </a>
+                  </div>
                 </div>
-                <p className="mt-1 font-round text-[13px] leading-normal font-light text-text/70">
-                  {current.blurb}
-                </p>
-              </div>
-              <a
-                href={previewHref}
-                target="_blank"
-                rel="noreferrer"
-                className="min-h-11 shrink-0 rounded-full px-4 font-round text-[13px] font-semibold text-primary shadow-[inset_0_0_0_1px_var(--color-primary)] inline-flex items-center"
-              >
-                Preview
-              </a>
-            </div>
+              );
+            })}
           </div>
         </div>
 
