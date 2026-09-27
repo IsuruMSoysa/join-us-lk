@@ -72,13 +72,24 @@ export function TemplatesSection() {
                 key={t.id}
                 type="button"
                 onClick={() => setActiveTemplate(i)}
-                className={`min-h-11 shrink-0 whitespace-nowrap rounded-full px-5 font-round text-[13px] font-semibold transition-colors duration-200 ${
+                className={`inline-flex min-h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-5 font-round text-[13px] font-semibold transition-colors duration-200 ${
                   i === activeTemplate
                     ? "bg-primary text-[#0E1330]"
                     : "text-text/75"
                 }`}
               >
                 {t.label}
+                {t.isNew && (
+                  <span
+                    className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold tracking-wide ${
+                      i === activeTemplate
+                        ? "bg-[#0E1330]/15 text-[#0E1330]"
+                        : "bg-primary/20 text-primary"
+                    }`}
+                  >
+                    NEW
+                  </span>
+                )}
               </button>
             ))}
           </div>
@@ -141,6 +152,11 @@ export function TemplatesSection() {
                     <span className="font-display text-lg font-bold">
                       {t.label}
                     </span>
+                    {t.isNew && (
+                      <span className="rounded-full bg-primary/20 px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-primary">
+                        NEW
+                      </span>
+                    )}
                   </div>
                   <p className="mt-1.5 ml-5.5 font-round text-sm leading-normal font-light text-text/70">
                     {t.blurb}

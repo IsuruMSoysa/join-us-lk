@@ -8,6 +8,7 @@ export type FeaturedTemplateDocument = {
   blurb: string;
   sortOrder: number;
   published: boolean;
+  isNew: boolean;
 };
 
 export type FeaturedTemplateWithId = FeaturedTemplateDocument & { id: string };

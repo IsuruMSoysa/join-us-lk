@@ -44,6 +44,7 @@ const emptyForm = {
   blurb: "",
   sortOrder: 0,
   published: false,
+  isNew: false,
 };
 
 export function FeaturedTemplatesPage() {
@@ -111,6 +112,7 @@ export function FeaturedTemplatesPage() {
       blurb: row.blurb,
       sortOrder: row.sortOrder,
       published: row.published,
+      isNew: row.isNew,
     });
     void loadInvitees(row.siteId);
     setDialogOpen(true);
@@ -153,6 +155,7 @@ export function FeaturedTemplatesPage() {
         blurb: form.blurb.trim(),
         sortOrder: Number(form.sortOrder) || 0,
         published: form.published,
+        isNew: form.isNew,
       };
       if (editingId) {
         await updateFeaturedTemplate(editingId, payload);
@@ -234,11 +237,14 @@ export function FeaturedTemplatesPage() {
                         /{row.siteSlug}/{row.sampleInviteeSlug}
                       </TableCell>
                       <TableCell>
-                        {row.published ? (
-                          <Badge variant="secondary">Published</Badge>
-                        ) : (
-                          <span className="text-xs text-text/60">Draft</span>
-                        )}
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          {row.published ? (
+                            <Badge variant="secondary">Published</Badge>
+                          ) : (
+                            <span className="text-xs text-text/60">Draft</span>
+                          )}
+                          {row.isNew && <Badge variant="success">New</Badge>}
+                        </div>
                       </TableCell>
                       <TableCell className="text-right space-x-2">
                         <Button type="button" variant="outline" size="sm" onClick={() => openEdit(row)}>
@@ -343,6 +349,15 @@ export function FeaturedTemplatesPage() {
                 className="h-4 w-4 rounded border-secondary/40"
               />
               Published (visible on landing page)
+            </label>
+            <label className="flex items-center gap-2 text-sm cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.isNew}
+                onChange={(e) => setForm((f) => ({ ...f, isNew: e.target.checked }))}
+                className="h-4 w-4 rounded border-secondary/40"
+              />
+              New (shown first with a &quot;New&quot; tag)
             </label>
           </div>
           <DialogFooter>
