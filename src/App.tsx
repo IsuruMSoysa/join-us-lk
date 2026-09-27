@@ -36,6 +36,11 @@ const ShowcaseProjectsPage = lazy(() =>
     default: m.ShowcaseProjectsPage,
   })),
 );
+const FeaturedTemplatesPage = lazy(() =>
+  import("./pages/admin/FeaturedTemplatesPage").then((m) => ({
+    default: m.FeaturedTemplatesPage,
+  })),
+);
 
 function RequireAdminAuth() {
   const { user, isAdmin, loading } = useAuthUser();
@@ -73,6 +78,7 @@ export default function App() {
             <Route path="sites" element={<SitesListPage />} />
             <Route path="portal-users" element={<PortalUsersPage />} />
             <Route path="showcase" element={<ShowcaseProjectsPage />} />
+            <Route path="featured-templates" element={<FeaturedTemplatesPage />} />
             <Route path="sites/new" element={<SiteFormPage />} />
             <Route path="sites/:siteId" element={<SiteFormPage />} />
             <Route path="sites/:siteId/invitees" element={<SiteInviteesPage />} />

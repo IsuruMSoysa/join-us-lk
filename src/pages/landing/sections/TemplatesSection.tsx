@@ -1,18 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatedSection } from "../../../components/shared/AnimatedSection";
-import { templateRegistry } from "../../../templates/registry";
-import {
-  LANDING_TEMPLATE_SLUGS,
-  TEMPLATE_BLURBS,
-  TEMPLATE_SHORT_LABELS,
-} from "../content";
-
-const TEMPLATES = LANDING_TEMPLATE_SLUGS.map((slug) => ({
-  slug,
-  name: templateRegistry[slug].name,
-  short: TEMPLATE_SHORT_LABELS[slug],
-  blurb: TEMPLATE_BLURBS[slug],
-}));
+import { getPublishedFeaturedTemplates } from "../../../lib/firestore/featuredTemplates";
+import { type FeaturedTemplateWithId } from "../../../types/featuredTemplate";
 
 function PreviewPlaceholder({ className }: { className?: string }) {
   return (
@@ -25,8 +14,37 @@ function PreviewPlaceholder({ className }: { className?: string }) {
 }
 
 export function TemplatesSection() {
+  const [templates, setTemplates] = useState<FeaturedTemplateWithId[] | null>(null);
   const [activeTemplate, setActiveTemplate] = useState(0);
-  const current = TEMPLATES[activeTemplate];
+
+  useEffect(() => {
+    let cancelled = false;
+    getPublishedFeaturedTemplates()
+      .then((items) => {
+        if (!cancelled) setTemplates(items);
+      })
+      .catch(() => {
+        if (!cancelled) setTemplates([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (templates === null) {
+    return (
+      <section id="templates" className="scroll-mt-24 px-4 pb-16 md:px-16 md:pb-26">
+        <div className="mx-auto max-w-[1152px] h-95 rounded-[22px] bg-white/5 animate-pulse" />
+      </section>
+    );
+  }
+
+  if (templates.length === 0) {
+    return null;
+  }
+
+  const current = templates[Math.min(activeTemplate, templates.length - 1)];
+  const previewHref = `/${current.siteSlug}/${current.sampleInviteeSlug}`;
 
   return (
     <section id="templates" className="scroll-mt-24 px-4 pb-16 md:px-16 md:pb-26">
@@ -39,9 +57,9 @@ export function TemplatesSection() {
             </h2>
           </AnimatedSection>
           <div className="mb-3.5 flex gap-1.5 rounded-full bg-white/6 p-1.5">
-            {TEMPLATES.map((t, i) => (
+            {templates.map((t, i) => (
               <button
-                key={t.slug}
+                key={t.id}
                 type="button"
                 onClick={() => setActiveTemplate(i)}
                 className={`min-h-11 flex-1 rounded-full font-round text-[13px] font-semibold whitespace-nowrap transition-colors duration-200 ${
@@ -50,24 +68,31 @@ export function TemplatesSection() {
                     : "text-text/75"
                 }`}
               >
-                {t.short}
+                {t.label}
               </button>
             ))}
           </div>
           <div className="overflow-hidden rounded-[22px] bg-panel-2 shadow-[0_0_0_1px_rgba(169,184,232,.25),0_0_50px_-12px_rgba(112,131,174,.8)]">
-            <PreviewPlaceholder className="h-95" />
+            <a href={previewHref} target="_blank" rel="noreferrer">
+              <PreviewPlaceholder className="h-95" />
+            </a>
             <div className="flex items-center justify-between gap-3 px-5 py-4.5">
               <div>
                 <div className="font-display text-lg font-bold">
-                  {current.name}
+                  {current.label}
                 </div>
                 <p className="mt-1 font-round text-[13px] leading-normal font-light text-text/70">
                   {current.blurb}
                 </p>
               </div>
-              <span className="min-h-11 shrink-0 rounded-full px-4 font-round text-[13px] font-semibold text-primary shadow-[inset_0_0_0_1px_var(--color-primary)] inline-flex items-center">
+              <a
+                href={previewHref}
+                target="_blank"
+                rel="noreferrer"
+                className="min-h-11 shrink-0 rounded-full px-4 font-round text-[13px] font-semibold text-primary shadow-[inset_0_0_0_1px_var(--color-primary)] inline-flex items-center"
+              >
                 Preview
-              </span>
+              </a>
             </div>
           </div>
         </div>
@@ -84,9 +109,9 @@ export function TemplatesSection() {
               Pick a look. We tailor it to your event.
             </p>
             <div className="flex flex-col gap-2">
-              {TEMPLATES.map((t, i) => (
+              {templates.map((t, i) => (
                 <button
-                  key={t.slug}
+                  key={t.id}
                   type="button"
                   onClick={() => setActiveTemplate(i)}
                   className={`rounded-2xl px-5 py-4.5 text-left transition-colors duration-200 ${
@@ -104,7 +129,7 @@ export function TemplatesSection() {
                       }`}
                     />
                     <span className="font-display text-lg font-bold">
-                      {t.name}
+                      {t.label}
                     </span>
                   </div>
                   <p className="mt-1.5 ml-5.5 font-round text-sm leading-normal font-light text-text/70">
@@ -115,17 +140,22 @@ export function TemplatesSection() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-3xl bg-panel-2 shadow-[0_0_0_1px_rgba(169,184,232,.25),0_0_80px_-16px_rgba(112,131,174,.8)]">
+          <a
+            href={previewHref}
+            target="_blank"
+            rel="noreferrer"
+            className="block overflow-hidden rounded-3xl bg-panel-2 shadow-[0_0_0_1px_rgba(169,184,232,.25),0_0_80px_-16px_rgba(112,131,174,.8)]"
+          >
             <div className="flex h-10 items-center gap-1.75 bg-panel px-4.5">
               <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
               <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
               <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
               <span className="ml-3.5 font-round text-xs text-text/50">
-                joinus.lk/{current.slug}
+                joinus.lk{previewHref}
               </span>
             </div>
             <PreviewPlaceholder className="h-115 text-xs" />
-          </div>
+          </a>
         </div>
       </div>
     </section>

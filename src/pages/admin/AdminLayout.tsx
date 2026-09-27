@@ -21,6 +21,9 @@ export function AdminLayout() {
             <Link to="/admin/showcase" className="hover:text-secondary">
               Landing showcase
             </Link>
+            <Link to="/admin/featured-templates" className="hover:text-secondary">
+              Featured templates
+            </Link>
             <Link to="/admin/sites/new" className="hover:text-secondary">
               New Site
             </Link>

@@ -46,6 +46,11 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    match /featuredTemplates/{templateId} {
+      allow read: if resource.data.published == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
     match /sites/{siteId} {
       // Public read only for published sites
       allow read: if resource.data.status == "published" || isAdmin() || canAccessSite(siteId);

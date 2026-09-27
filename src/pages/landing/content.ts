@@ -55,27 +55,6 @@ export const STEPS = [
   },
 ];
 
-// Maps design-spec template slots to real slugs in src/templates/registry.ts.
-// "Night Glow" isn't a real template yet — "rise-beyond" (dark, high-energy)
-// is the closest existing match.
-export const LANDING_TEMPLATE_SLUGS = [
-  "wedding-classic",
-  "beach-modern",
-  "rise-beyond",
-] as const;
-
-export const TEMPLATE_SHORT_LABELS: Record<string, string> = {
-  "wedding-classic": "Classic",
-  "beach-modern": "Beach",
-  "rise-beyond": "Night",
-};
-
-export const TEMPLATE_BLURBS: Record<string, string> = {
-  "wedding-classic": "Hero story, gallery, map and gated RSVP.",
-  "beach-modern": "Airy, bold, made for destinations.",
-  "rise-beyond": "Dark, luminous, made for evening receptions.",
-};
-
 export const QUOTES = [
   {
     quote:
