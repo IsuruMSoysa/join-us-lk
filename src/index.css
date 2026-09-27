@@ -1,14 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Fredoka:wght@500;600;700&family=Jost:wght@300;400;500&family=Marcellus&family=Montserrat:wght@700;800;900&family=Outfit:wght@400;700&family=Dancing+Script:wght@400;700&family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Fredoka:wght@500;600;700&family=Jost:wght@300;400;500&family=Lexend:wght@300;600;700;800&family=Marcellus&family=Montserrat:wght@700;800;900&family=Outfit:wght@400;700&family=Poppins:wght@300;500;600;700&family=Dancing+Script:wght@400;700&family=Inter:wght@400;500;600&display=swap");
 
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #d4af37;
-  --color-secondary: #556b2f;
-  --color-accent: #800000;
-  --color-background: #fdfcf8;
-  --color-text: #6f4e37;
+  --color-primary: #ffd35a;
+  --color-secondary: #a9b8e8;
+  --color-accent: #25d366;
+  --color-background: #0e1330;
+  --color-text: #f3f1ff;
   --color-muted: #8b7d6b;
+  --color-panel: #161c48;
+  --color-panel-2: #1a2150;
+  --color-dusk: #7083ae;
   --rsvp-surface: #2f3f25;
   --rsvp-text: #f8f7f2;
   --rsvp-muted-text: #d9d4c7;
@@ -29,8 +32,8 @@
   --rsvp-icon-muted: #ffffff80;
   --rsvp-glow: #00000040;
 
-  --font-round: "Outfit", sans-serif;
-  --font-display: "Fredoka", "Outfit", sans-serif;
+  --font-round: "Poppins", sans-serif;
+  --font-display: "Lexend", sans-serif;
   --font-handwritten: "Dancing Script", cursive;
   --font-rise-beyond: "Barlow", ui-sans-serif, system-ui, sans-serif;
   --font-union-awards: "Montserrat", "Archivo Black", ui-sans-serif, system-ui,
@@ -209,8 +212,37 @@ body {
   animation: float 6s ease-in-out infinite;
 }
 
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes orb-drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(12px, -18px);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.animate-orb-drift {
+  animation: orb-drift 10s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-float {
+  .animate-float,
+  .animate-marquee,
+  .animate-orb-drift {
     animation: none;
   }
 }
