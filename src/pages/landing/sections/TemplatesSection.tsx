@@ -3,12 +3,22 @@ import { AnimatedSection } from "../../../components/shared/AnimatedSection";
 import { getPublishedFeaturedTemplates } from "../../../lib/firestore/featuredTemplates";
 import { type FeaturedTemplateWithId } from "../../../types/featuredTemplate";
 
-function PreviewPlaceholder({ className }: { className?: string }) {
+// Shows the real, live invite scaled down to fit the preview frame, by
+// rendering it oversized in an iframe and scaling it back down with CSS —
+// there's no screenshot/thumbnail pipeline, so this is the actual site.
+function LivePreview({ href, className }: { href: string; className?: string }) {
   return (
     <div
-      className={`flex items-center justify-center bg-[repeating-linear-gradient(135deg,#252D5E_0_12px,#20285A_12px_24px)] font-mono text-[11px] text-text/50 ${className ?? ""}`}
+      className={`relative overflow-hidden bg-[repeating-linear-gradient(135deg,#252D5E_0_12px,#20285A_12px_24px)] ${className ?? ""}`}
     >
-      template preview
+      <iframe
+        key={href}
+        src={href}
+        title="Live template preview"
+        loading="lazy"
+        sandbox="allow-scripts allow-same-origin allow-forms"
+        className="pointer-events-none absolute top-0 left-0 h-[286%] w-[286%] origin-top-left scale-[0.35] border-0"
+      />
     </div>
   );
 }
@@ -74,7 +84,7 @@ export function TemplatesSection() {
           </div>
           <div className="overflow-hidden rounded-[22px] bg-panel-2 shadow-[0_0_0_1px_rgba(169,184,232,.25),0_0_50px_-12px_rgba(112,131,174,.8)]">
             <a href={previewHref} target="_blank" rel="noreferrer">
-              <PreviewPlaceholder className="h-95" />
+              <LivePreview href={previewHref} className="h-95" />
             </a>
             <div className="flex items-center justify-between gap-3 px-5 py-4.5">
               <div>
@@ -154,7 +164,7 @@ export function TemplatesSection() {
                 joinus.lk{previewHref}
               </span>
             </div>
-            <PreviewPlaceholder className="h-115 text-xs" />
+            <LivePreview href={previewHref} className="h-115" />
           </a>
         </div>
       </div>
