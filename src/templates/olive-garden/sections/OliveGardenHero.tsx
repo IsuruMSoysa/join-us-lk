@@ -50,14 +50,22 @@ export function OliveGardenHero({
   content,
 }: OliveGardenHeroProps) {
   const event = new Date(content.eventDateTime);
-  const weekDays = useMemo(() => getEventWeek(content.eventDateTime), [content.eventDateTime]);
+  const weekDays = useMemo(
+    () => getEventWeek(content.eventDateTime),
+    [content.eventDateTime],
+  );
   const monthYearLabel = Number.isNaN(event.getTime())
     ? ""
-    : event.toLocaleDateString("en-US", { month: "long", year: "numeric" }).toUpperCase();
+    : event
+        .toLocaleDateString("en-US", { month: "long", year: "numeric" })
+        .toUpperCase();
   const showCountdown = content.showCountdown ?? true;
   const countdownTarget = getCountdownTarget(content);
 
-  const timeLine = [content.eventTime, content.poruwaTime ? `Poruwa at ${content.poruwaTime}` : ""]
+  const timeLine = [
+    content.eventTime,
+    content.poruwaTime ? `Poruwa at ${content.poruwaTime}` : "",
+  ]
     .filter(Boolean)
     .join("  ·  ");
   const venueLine = content.venueName
@@ -138,13 +146,18 @@ export function OliveGardenHero({
               {weekDays.map((day, i) => {
                 const isEventDay = isSameDay(day, event);
                 return (
-                  <div key={i} className="flex flex-1 flex-col items-center gap-2">
+                  <div
+                    key={i}
+                    className="flex flex-1 flex-col items-center gap-2"
+                  >
                     <span className="og-label text-[9px] text-[#9ea65e] sm:text-[10px]">
                       {WEEKDAY_LABELS[i]}
                     </span>
                     <span
                       className={`og-serif flex h-9 w-9 items-center justify-center rounded-full text-[17px] font-normal leading-none sm:h-10 sm:w-10 sm:text-[19px] ${
-                        isEventDay ? "bg-[#4a5a22] text-[#f6f1e4]" : "text-[#a4ad72]"
+                        isEventDay
+                          ? "bg-[#4a5a22] text-[#f6f1e4]"
+                          : "text-[#a4ad72]"
                       }`}
                     >
                       {day.getDate()}
@@ -158,7 +171,7 @@ export function OliveGardenHero({
                 {timeLine ? (
                   <p
                     className="og-ui font-semibold text-[#4a5a22]"
-                    style={{ fontSize: "clamp(20px, 4.5vw, 30px)" }}
+                    style={{ fontSize: "clamp(15px, 3.5vw, 20px)" }}
                   >
                     {timeLine}
                   </p>
@@ -201,7 +214,10 @@ export function OliveGardenHero({
           <div className="relative overflow-hidden rounded-[26px] bg-[#3b4519] px-[clamp(24px,4vw,52px)] py-[clamp(30px,4vw,52px)] text-left shadow-[0_24px_60px_rgba(59,69,25,0.22)]">
             <div
               className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full"
-              style={{ background: "radial-gradient(circle, rgba(214,180,104,.25), transparent 70%)" }}
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(214,180,104,.25), transparent 70%)",
+              }}
               aria-hidden
             />
             <p className="og-label relative text-[11px] uppercase tracking-[0.34em] text-[#d6b468]">
