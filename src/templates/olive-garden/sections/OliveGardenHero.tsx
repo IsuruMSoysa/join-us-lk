@@ -84,7 +84,7 @@ export function OliveGardenHero({
 
         {personalized && validInvite && inviteeName ? (
           <AnimatedSection delay={0.15}>
-            <p className="og-serif mt-6 text-2xl font-light italic text-[#85641b] sm:text-3xl">
+            <p className="og-serif mt-2 text-2xl font-light italic text-[#85641b] sm:text-3xl">
               {inviteeName}
             </p>
           </AnimatedSection>
