@@ -66,23 +66,18 @@ export function OliveGardenHero({
 
   return (
     <section className="relative pt-8 text-center">
-      <div className="pb-[min(9vh,80px)] pt-[min(12vh,110px)]">
-        <AnimatedSection delay={0}>
-          <div
-            className="mx-auto overflow-hidden rounded-full border-4 border-[#c9a24a] shadow-[0_24px_60px_rgba(59,69,25,0.22)]"
-            style={{ width: "clamp(96px, 22vw, 168px)", height: "clamp(96px, 22vw, 168px)" }}
-          >
-            <img
-              src="/images/couple.webp"
-              alt=""
-              loading="lazy"
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </AnimatedSection>
+      <AnimatedSection delay={0}>
+        <img
+          src="/images/couple.webp"
+          alt=""
+          loading="lazy"
+          className="mx-auto mt-2 block h-auto w-[clamp(220px,46vw,380px)]"
+        />
+      </AnimatedSection>
 
+      <div className="pb-[min(9vh,80px)] pt-[min(6vh,56px)]">
         <AnimatedSection delay={0.1}>
-          <p className="og-label mt-6 text-[12px] uppercase tracking-[0.34em] text-[#6b7a3a]">
+          <p className="og-label text-[12px] uppercase tracking-[0.34em] text-[#6b7a3a]">
             {content.heroGreeting}
           </p>
         </AnimatedSection>
