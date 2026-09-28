@@ -73,10 +73,6 @@ export function OliveGardenShell({
         .og-ui { font-family: var(--font-olive-garden-ui); }
         .og-label { font-family: var(--font-olive-garden-label); }
 
-        .og-page-glow {
-          background: radial-gradient(ellipse 60% 40% at 50% 0%, #fbf8ee 0%, transparent 70%);
-        }
-
         .og-name {
           background: linear-gradient(
             100deg,
@@ -172,8 +168,6 @@ export function OliveGardenShell({
           .og-rise, .og-wipe { opacity: 1; transform: none; }
         }
       `}</style>
-
-      <div className="og-page-glow fixed inset-0 z-0 pointer-events-none" aria-hidden />
 
       {/* Structural garlands stay even under reduced motion (just static);
           the optional falling-leaves layer is skipped outright. */}
