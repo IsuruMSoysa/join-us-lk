@@ -71,7 +71,7 @@ export function OliveGardenHero({
           src="/images/couple.webp"
           alt=""
           loading="lazy"
-          className="mx-auto mt-2 block h-auto w-[clamp(220px,46vw,380px)]"
+          className="mx-auto mt-2 block h-auto w-[clamp(170px,34vw,290px)]"
         />
       </AnimatedSection>
 
