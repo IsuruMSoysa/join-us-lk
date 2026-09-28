@@ -2,7 +2,8 @@ import { type ReactNode } from "react";
 import { usePrefersReducedMotion } from "../../lib/hooks/usePrefersReducedMotion";
 import { JoinUsBadge } from "../../components/shared/JoinUsBadge";
 import { Garlands } from "./Garlands";
-import { FallingLeaves } from "./FallingLeaves";
+// import { FallingLeaves } from "./FallingLeaves"; // swapped for flying butterflies; kept for easy revert
+import { FlyingButterfly } from "../../components/decor/FlyingButterfly";
 
 /**
  * Olive Garden palette — cream and gold, olive-leaf motifs.
@@ -177,7 +178,16 @@ export function OliveGardenShell({
       {/* Structural garlands stay even under reduced motion (just static);
           the optional falling-leaves layer is skipped outright. */}
       <Garlands />
-      {!reducedMotion && fallingLeaves ? <FallingLeaves /> : null}
+      {/* Falling leaves — swapped for flying butterflies below; kept for easy revert.
+      {!reducedMotion && fallingLeaves ? <FallingLeaves /> : null} */}
+      {!reducedMotion && fallingLeaves ? (
+        <>
+          <FlyingButterfly index={0} size={14} color="#556b2f" />
+          <FlyingButterfly index={1} size={10} color="#85641b" delay={0.5} />
+          <FlyingButterfly index={2} size={16} color="#c9a24a" delay={1} isForeground />
+          <FlyingButterfly index={3} size={11} color="#6b7a3a" delay={1.5} isForeground />
+        </>
+      ) : null}
 
       {/* Gutter clears the side garlands; cap keeps the 1080px column centred. */}
       <main
