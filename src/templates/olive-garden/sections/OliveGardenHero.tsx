@@ -65,13 +65,13 @@ export function OliveGardenHero({
     : "";
 
   return (
-    <section className="relative pt-8 text-center">
+    <section className="relative pt-2 text-center">
       <AnimatedSection delay={0}>
         <img
           src="/images/couple.webp"
           alt=""
           loading="lazy"
-          className="mx-auto mt-2 block h-auto w-[clamp(170px,34vw,290px)]"
+          className="mx-auto block h-auto w-[clamp(170px,34vw,290px)]"
         />
       </AnimatedSection>
 
