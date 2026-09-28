@@ -93,7 +93,7 @@ export function OliveGardenHero({
         <AnimatedSection delay={0.2}>
           <h1
             className="og-serif og-name mt-6 font-light leading-[0.9] tracking-[-0.01em]"
-            style={{ fontSize: "clamp(64px, 12vw, 156px)" }}
+            style={{ fontSize: "clamp(48px, 9vw, 116px)" }}
           >
             {content.names.first}
           </h1>
@@ -112,7 +112,7 @@ export function OliveGardenHero({
         <AnimatedSection delay={0.45}>
           <h1
             className="og-serif og-name og-name-reverse font-light leading-[0.9] tracking-[-0.01em]"
-            style={{ fontSize: "clamp(64px, 12vw, 156px)" }}
+            style={{ fontSize: "clamp(48px, 9vw, 116px)" }}
           >
             {content.names.second}
           </h1>

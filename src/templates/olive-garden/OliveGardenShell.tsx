@@ -7,7 +7,7 @@ import { FlyingButterfly } from "../../components/decor/FlyingButterfly";
 
 /**
  * Olive Garden palette — cream and gold, olive-leaf motifs.
- *   Cream    #f6f1e4  page background
+ *   Cream    #F4EBDF  page background
  *   Card     #fbf8ee  card surfaces
  *   Tile     #efe9d7  tile surfaces
  *   Border   #e3ddc7  hairline borders
@@ -67,7 +67,7 @@ export function OliveGardenShell({
   const reducedMotion = usePrefersReducedMotion();
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f6f1e4] font-olive-garden-ui text-[#555a38] selection:bg-[#4a5a22]/20 selection:text-[#3d4224]">
+    <div className="min-h-screen overflow-x-hidden bg-[#F4EBDF] font-olive-garden-ui text-[#555a38] selection:bg-[#4a5a22]/20 selection:text-[#3d4224]">
       <style>{`
         .og-serif { font-family: var(--font-olive-garden); }
         .og-ui { font-family: var(--font-olive-garden-ui); }
